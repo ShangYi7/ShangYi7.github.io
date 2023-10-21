@@ -239,10 +239,10 @@ h6 {
 # Hero Section
 --------------------------------------------------------------*/
 #hero {
-  width: 100%;
+  width: auto;
   height: 100vh;
   background: url("../img/hero-bg.jpg") top center;
-  background-size: 100%;
+  background-size: auto;
 }
 
 #hero:before {
@@ -257,9 +257,11 @@ h6 {
 }
 
 #hero .hero-container {
-  position: relative;
+  position: relative, auto;
   z-index: 2;
-  min-width: 300px;
+  min-width: 1;
+  width: auto;
+  height: auto;
 }
 
 #hero h1 {

@@ -8,7 +8,6 @@
 
 [ <h1 align="center">Shang Yi Web</h1>](https://shangYi7.github.io/zh-TW)
 
-------
 
 
   <a href="https://discord.gg/tbBSkhUvcn" title=""><img alt="Discord Invite" src="https://share.creavite.co/EPKK5Y6xGdzbYg4E.gif"></a>

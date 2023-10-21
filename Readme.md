@@ -6,7 +6,7 @@
     <img src="https://media.discordapp.net/attachments/894165679236849664/894205988981321749/oxy2z8cVdMAAAAASUVORK5CYII.png?width=280&height=140">
   </a> 
 
-[ <h1 align="center">Shang Yi Web</h1>](https://shangYi7.github.io/zh-TW)
+[<h1 align="center">Shang Yi Web</h1>](https://shangYi7.github.io/zh-TW)
 
 
 

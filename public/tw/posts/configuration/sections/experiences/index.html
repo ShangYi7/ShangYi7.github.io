@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="tw">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Configurando la sección de Experiencia</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.3c9370a80bbee8198a371eb6788534518f4cce1d99a406575eb949d992c9ff7a.css" integrity="sha256-PJNwqAu&#43;6BmKNx62eIU0UY9Mzh2ZpAZXXrlJ2ZLJ/3o=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/favicon_hu10712545039534722708.png" />
+
+<meta property="og:url" content="http://localhost:1313/tw/posts/configuration/sections/experiences/">
+  <meta property="og:site_name" content="Shang Yi">
+  <meta property="og:title" content="Configurando la sección de Experiencia">
+  <meta property="og:description" content="La sección de Experiencia ha sido diseñada para mostrar su trayectoria profesional y resalte las responsabilidades que ha asumido a lo largo de su trayectoria profesional. En esta publicación, le guiaré a través del proceso de configuración de la sección de Experiencia en su sitio web. Para obtener una referencia completa, puede consultar el archivo de ejemplo experiences.yaml.
+Para empezar, crea un nuevo archivo llamado experiences.yaml dentro del directorio data/es/sections de tu sitio web.">
+  <meta property="og:locale" content="tw">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-06-08T06:20:40+06:00">
+    <meta property="article:modified_time" content="2020-06-08T06:20:40+06:00">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Configurando la sección de Experiencia">
+  <meta name="twitter:description" content="La sección de Experiencia ha sido diseñada para mostrar su trayectoria profesional y resalte las responsabilidades que ha asumido a lo largo de su trayectoria profesional. En esta publicación, le guiaré a través del proceso de configuración de la sección de Experiencia en su sitio web. Para obtener una referencia completa, puede consultar el archivo de ejemplo experiences.yaml.
+Para empezar, crea un nuevo archivo llamado experiences.yaml dentro del directorio data/es/sections de tu sitio web.">
+
+    
+    
+<meta name="description" content="Configurando la sección de Experiencia" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/tw">
+      
+        <img src="/images/site/main-logo_hu610386705831330768.png" id="logo" alt="Logo">
+      Shang Yi</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/tw#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/tw#about">關於</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/tw#skills">技能</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/tw#projects">專案</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/tw#recent-posts">最近的帖子</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/tw#accomplishments">事蹟</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/tw/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/tw/notes">Notes</a>
+          </li>
+        
+        
+        
+          
+
+  
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="languageSelector" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        
+            
+            <span class="flag-icon flag-icon-tw"></span>
+        
+        繁體中文
+    </a>
+    <div class="dropdown-menu" aria-labelledby="languageSelector">
+        
+        <a class="dropdown-item nav-link languages-item" href="/posts/configuration/sections/experiences">
+            
+                
+                <span class="flag-icon flag-icon-gb"></span>
+            
+            English
+        </a>
+        
+        <a class="dropdown-item nav-link languages-item" href="/tw/posts/configuration/sections/experiences">
+            
+                
+                <span class="flag-icon flag-icon-tw"></span>
+            
+            繁體中文
+        </a>
+        
+    </div>
+    </li>
+
+        
+        
+          <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+</div>
+</li>
+
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/main-logo_hu610386705831330768.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/inverted-logo_hu10712545039534722708.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/tw/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/tw/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/features/" title="Características">Características</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/quickstart/" title="Inicio Rápido">Inicio Rápido</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/tw/posts/getting-started/"> Primeros Pasos</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/getting-started/prepare-site/" title="Prepare su sitio web">Prepare su sitio web</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/getting-started/github-pages/" title="Despliegue en Github Pages">Despliegue en Github Pages</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/getting-started/netlify/" title="Despliegue en Netlify">Despliegue en Netlify</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/getting-started/theme-update/" title="Automatiza actualizaciones">Automatiza actualizaciones</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/tw/posts/configuration/"> Configuración</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/configuration/site-parameters/" title="Parámetros del sitio">Parámetros del sitio</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/tw/posts/configuration/sections/"> Secciones</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/configuration/sections/about/" title="Sección Sobre mi">Sección Sobre mi</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/configuration/sections/skills/" title="Sección de Habilidades">Sección de Habilidades</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/tw/posts/configuration/sections/experiences/" title="Sección de Experiencia">Sección de Experiencia</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/configuration/sections/education/" title="Sección de Educación">Sección de Educación</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/configuration/sections/projects/" title="Sección de Proyectos">Sección de Proyectos</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/configuration/sections/featured-posts/" title="Sección de Publicaciones Destacadas">Sección de Publicaciones Destacadas</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/configuration/sections/recent-posts/" title="Sección de Publicaciones Recientes">Sección de Publicaciones Recientes</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/configuration/sections/achievements/" title="Sección de Logros">Sección de Logros</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/tw/posts/writing-posts/"> Escribiendo Publicaciones</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/tw/posts/writing-posts/organizing/"> Organizando Publicaciones</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/writing-posts/organizing/category/" title="Creando una Categoría">Creando una Categoría</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/tw/posts/writing-posts/organizing/sub-category/"> Sub-Categoría</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/writing-posts/organizing/sub-category/example/" title="Creando una Sub-Categoría">Creando una Sub-Categoría</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/writing-posts/front-matter/" title="Front-matter">Front-matter</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/writing-posts/markdown-syntax/" title="Guía de Markdown">Guía de Markdown</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/writing-posts/math/" title="Guía de Matemáticas">Guía de Matemáticas</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/writing-posts/rich-content/" title="Contenido Enriquecido">Contenido Enriquecido</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/writing-posts/mermaid/" title="Mermaid">Mermaid</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/writing-posts/using-emoji/" title="Usando Emojis">Usando Emojis</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/tw/posts/customizing/"> Personalización</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/customizing/dark-theme/" title="Habilitar Tema Oscuro">Habilitar Tema Oscuro</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/customizing/customize-css/" title="Personalización CSS">Personalización CSS</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/customizing/customize-layout/" title="Personalizacion Disposición">Personalizacion Disposición</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/customizing/new-section/" title="Añadiendo nueva Sección">Añadiendo nueva Sección</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/tw/posts/translation/"> Traducción</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/translation/new-language/" title="Añadiendo un nuevo idioma">Añadiendo un nuevo idioma</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/translation/site-data/" title="Traduciendo la página de inicio">Traduciendo la página de inicio</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/translation/content/" title="Traduciendo Publicaciones">Traduciendo Publicaciones</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/analytics/" title="Analíticas">Analíticas</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/comments/" title="Comentarios">Comentarios</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/supports/" title="Enlaces de Soporte">Enlaces de Soporte</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/shortcodes/" title="Los Shortcodes">Los Shortcodes</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="https://example.com/" title="Ejemplo de link externo">Ejemplo de link externo</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/contributing/" title="Contribuyendo">Contribuyendo</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/tw/posts/update-v3-to-v4/" title="Migración de V3 a V4">Migración de V3 a V4</a></li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/configuration/sections/experiences/hero.svg);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/bernatbc_hu14455280900239101682.png' alt="Author Image">
+          <h5 class="author-name">BernatBC</h5>
+          <p class="text-muted">Monday, June 8, 2020</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>Configurando la sección de Experiencia</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <p>La sección de <code>Experiencia</code> ha sido diseñada para mostrar su trayectoria profesional y resalte las responsabilidades que ha asumido a lo largo de su trayectoria profesional. En esta publicación, le guiaré a través del proceso de configuración de la sección de <code>Experiencia</code> en su sitio web. Para obtener una referencia completa, puede consultar el archivo de ejemplo <a href="https://github.com/hugo-toha/hugo-toha.github.io/blob/main/data/en/sections/experiences.yaml" target="_blank" rel="noopener">experiences.yaml</a>.</p>
+<p>Para empezar, crea un nuevo archivo llamado <code>experiences.yaml</code> dentro del directorio <code>data/es/sections</code> de tu sitio web. Después, sigue las instrucciones de abajo.</p>
+<h3 id="añade-la-información-de-la-sección">Añade la información de la sección</h3>
+<p>Añade la siguiente sección de metadatos en el archivo <code>experiences.yaml</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">section</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name: Experiencia # Título de la sección (predeterminado</span>: <span style="color:#e6db74">&#34;&#34;</span><span style="color:#ae81ff">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">id</span>: <span style="color:#ae81ff">experiences</span> <span style="color:#75715e"># id del url de la sección *se requiere*</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">enable: true # Booleano que determina si la sección está activada (predeterminado</span>: <span style="color:#66d9ef">false</span><span style="color:#ae81ff">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">weight: 3 # Orden de la sección (predeterminado</span>: <span style="color:#ae81ff">alfabeticamente seguida del peso)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">showOnNavbar</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># Booleano que determina si el enlace de esta sección debe aparecer en la barra de navegación</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Opcionalmente puede ocultar el título del menú</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># hideTitle: true</span>
+</span></span></code></pre></div><h3 id="añade-tu-experiencia">Añade tu experiencia</h3>
+<p>Para añadir una experiencia, añade la respectiva información debajo de la sección <code>experiences</code> dentro del archivo <code>experiences.yaml</code>, como a continuación:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># Tu experiencia</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">experiences</span>:
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">company</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Example Co.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;https://www.example.com&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">location</span>: <span style="color:#ae81ff">Dhaka Branch</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">logo</span>: <span style="color:#ae81ff">/images/experiences/company.png</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">darkLogo</span>: <span style="color:#ae81ff">/images/experiences/company-dark.png</span> <span style="color:#75715e">#(opcional), opcionalmente puede mostrar un logo distinto para el tema oscuro.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># resumen de la empresa</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">overview</span>: <span style="color:#ae81ff">Example Co. es una empresa ampliamente reconocida de cloud-native development. Crea herramientas para Kubernetes.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">positions</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">designation</span>: <span style="color:#ae81ff">Ingeniero de Software Sénior</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">start</span>: <span style="color:#ae81ff">Nov 2019</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># No des una fecha de finalización si aún trabajas ahí. Será sustituida &#34;Presente&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># end: Dec 2020</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Da unos puntos sobre tus responsablildades en la empresa.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">responsibilities</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">Diseñar y desarollar la herramienta XYZ para la tarea ABC</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">Diseñar, desarollar y administrar herramienta de recuperación de desastres [Xtool](https://www.example.com) que hace copias de seguridad de volúmenes de Kubernetes, Bases de Datos y definición de recursos del clúster.</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">Líder del equipo de backend.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">designation</span>: <span style="color:#ae81ff">Ingeniero de Software Júnior</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">start</span>: <span style="color:#ae81ff">Nov 2017</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">end</span>: <span style="color:#ae81ff">Oct 2019</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">responsibilities</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">Implementar y testear la funcionalidad xyz de la herramienta abc.</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">Dar soporte al cliente de la herramienta abc.</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">Aprender tecnología k,d,w de xyz.</span>
+</span></span></code></pre></div><p>Cada entrada de la sección <code>experiences</code> debería tener la siguiente información,</p>
+<ul>
+<li><strong>company</strong>: Información sobre tu empresa. Deberías proveer <code>name</code>, <code>url</code>, <code>location</code>, <code>logo</code>, y un breve <code>overview</code> de la empresa.</li>
+<li><strong>positions</strong>: Lista de posiciones que has tenido en la empresa. Puedes proveer múltiples posiciones si has cambiado de posición en la empresa.</li>
+<li><strong>designation</strong>: Representa los roles que has tenido en la posición correspondiente.</li>
+<li><strong>start</strong>: Fecha en que te uniste en la respectiva posición.</li>
+<li><strong>end</strong>: Fecha en que dejaste la posición. Si aún está trabajando en esa posición, no llenes este campo.</li>
+<li><strong>responsibilities</strong>: Lista de responsabilidades que tuviste en esa posición. Esta sección es muy importante, ya que el visitante podrá tener una idea sobre las responsabilidades profesionales que eres capaz de manejar.</li>
+</ul>
+<blockquote>
+<p>Puedes usar la sintáctica de markdown en el campo <code>overview</code> de la sección <code>company</code> y el campo de <code>responsibilities</code>.</p>
+</blockquote>
+<!-- <div style="margin-top: 2rem;"></div>
+
+La siguiente imagen muestra cómo se distribuye el contenido de `experiences.yaml` de la sección de `Experiencia`.
+
+<img src="images/experiences.png"
+    
+    
+    
+    
+    
+>
+ -->
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2ftw%2fposts%2fconfiguration%2fsections%2fexperiences%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2ftw%2fposts%2fconfiguration%2fsections%2fexperiences%2f&text=Configurando%20la%20secci%c3%b3n%20de%20Experiencia&via=Shang%20Yi" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2ftw%2fposts%2fconfiguration%2fsections%2fexperiences%2f&title=Configurando%20la%20secci%c3%b3n%20de%20Experiencia" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2ftw%2fposts%2fconfiguration%2fsections%2fexperiences%2f&title=Configurando%20la%20secci%c3%b3n%20de%20Experiencia" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Configurando%20la%20secci%c3%b3n%20de%20Experiencia http%3a%2f%2flocalhost%3a1313%2ftw%2fposts%2fconfiguration%2fsections%2fexperiences%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Configurando%20la%20secci%c3%b3n%20de%20Experiencia&body=http%3a%2f%2flocalhost%3a1313%2ftw%2fposts%2fconfiguration%2fsections%2fexperiences%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/ShangYi7/ShangYi7.github.io/edit/main/content/posts%5cconfiguration%5csections%5cexperiences%5cindex.tw.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/tw/posts/configuration/sections/skills/" title="Configurando la sección de Habilidades" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Configurando la sección de Habilidades</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/tw/posts/configuration/sections/education/" title="Configurando la sección de Educación" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">Configurando la sección de Educación</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+        
+    
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    (function () {
+      
+      
+      if (window.location.hostname == "localhost") return;
+
+      var dsq = document.createElement("script");
+      dsq.type = "text/javascript";
+      dsq.async = true;
+      var disqus_shortname = "toha-example-site";
+      dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+      (
+        document.getElementsByTagName("head")[0] ||
+        document.getElementsByTagName("body")[0]
+      ).appendChild(dsq);
+    })();
+  </script>
+  <noscript
+    >Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript"
+      >comments powered by Disqus.</a
+    ></noscript
+  >
+  <a href="https://disqus.com/" class="dsq-brlink"
+    >comments powered by <span class="logo-disqus">Disqus</span></a
+  >
+
+
+
+
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#añade-la-información-de-la-sección">Añade la información de la sección</a></li>
+        <li><a href="#añade-tu-experiencia">Añade tu experiencia</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="http://localhost:1313/tw/#about">關於</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="http://localhost:1313/tw/#skills">技能</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="http://localhost:1313/tw/#projects">專案</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="http://localhost:1313/tw/#recent-posts">最近的帖子</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="http://localhost:1313/tw/#accomplishments">事蹟</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:shangyi6.tw@gmil.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>shangyi6.tw@gmil.com</span>
+                </a></li>
+              
+            
+              
+                <li><a href=https://github.com/ShangYi7 target="_blank" rel="noopener">
+                  <span><i class="fab fa-github"></i></span> <span>ShangYi7</span>
+                </a></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu16779671404603505019.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2020 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.056a24e1260611929a512616be0bae7955a20c9d4f5cacdb8440a10be3080104.js" integrity="sha256-BWok4SYGEZKaUSYWvguueVWiDJ1PXKzbhEChC&#43;MIAQQ=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>

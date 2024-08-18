@@ -1,0 +1,37 @@
+# section information
+section:
+  name: Skill
+  id: skills
+  enable: true
+  weight: 2
+  showOnNavbar: true
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+# Your Skills.
+# Give a summary of you each skill in the summary section.
+skills:
+- name: Verilog
+  logo: /images/sections/skills/Verilog.svg
+  summary: "Can design and develop digital circuits, including FPGA and ASIC design. And implement various logic functions and digital systems. Design and implement various digital circuits through Verilog, from simple gate circuits to complex processors and communication systems."
+  url: "https://Verilog.com/"
+
+- name: Python
+  logo: /images/sections/skills/python.svg
+  summary: "I perform data analysis, automated tasks, and web crawlers. I can use the flexibility and readability of Python to quickly implement various applications, and Python has broad application prospects in different fields."
+  url: "https://www.python.org"
+
+- name: C
+  logo: /images/sections/skills/c.svg
+  summary: "It is a low-level language that can directly control the hardware and has high performance and efficiency. I can use C to develop system software and embedded systems. The syntax of C is concise and clear, which is very useful for in-depth understanding of programming and learning other high-level Language is also very helpful."
+  url: "https://learn.microsoft.com/zh-tw/cpp/c-language/?view=msvc-170"
+
+- name: C#
+  logo: /images/sections/skills/c-sharp.svg
+  summary: "Use C# to develop a variety of applications, including desktop applications, websites, games, and mobile applications. C# has strong type safety and rich function libraries, making the development process more efficient and reliable."
+  url: "https://learn.microsoft.com/zh-tw/dotnet/csharp/tour-of-csharp/"
+
+- name: Visual Basic
+  logo: /images/sections/skills/VB.svg
+  summary: "I can use VB to create desktop applications, websites, enterprise applications, games, etc."
+  url: "https://learn.microsoft.com/zh-tw/dotnet/visual-basic/"

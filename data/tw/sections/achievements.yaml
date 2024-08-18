@@ -1,0 +1,31 @@
+# section information
+section:
+  name: 事蹟
+  id: accomplishments
+  enable: true
+  weight: 9
+  showOnNavbar: true
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+
+# Your accomplishments
+accomplishments:
+- name: Fivem 伺服器
+  timeline: "2021 1月 - 至今"
+  organization:
+    name: Fivem website
+    url: https://fivem.net
+  courseOverview: "Fivem伺服器是一個多人遊戲平台, 可以提供豐富的遊戲體驗和社交互動.通過搭建和管理Fivem伺服器, 你可以學習到伺服器管理,網絡配置和資料庫管理等技術, 對於遊戲開發和網絡管理有很大幫助.未來, Fivem伺服器將繼續發展, 提供更多功能和應用場景, 同時也促進遊戲創意和社區發展."
+  # certificateURL: "https://example.com"
+
+- name: 開發 FPGA Verilog
+  timeline: "2024 2月 - 2025 2月"
+  organization:
+    name: FPGA
+    url: https://zh.wikipedia.org/zh-tw/%E7%8E%B0%E5%9C%BA%E5%8F%AF%E7%BC%96%E7%A8%8B%E9%80%BB%E8%BE%91%E9%97%A8%E9%98%B5%E5%88%97
+  courseOverview: "學習FPGA Verilog可以讓你獲得硬體設計的能力, 並且具有平行處理和快速原型開發的優勢.這對於嵌入式系統開發,效能優化和各個領域的應用都非常實用.未來, 隨著技術的發展, FPGA將在通信,圖像處理,人工智能和物聯網等領域發揮更大的作用.."
+  # certificateURL: "https://example.com"
+
+ 
+

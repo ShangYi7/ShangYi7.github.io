@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "電商平台設計",
+    "description": "響應式網頁設計與前端互動功能開發",
+    "image": "/assets/images/portfolio1.jpg",
+    "link": "https://example.com/project1",
+    "tags": "web design",
+    "category": "web"
+  },
+  {
+    "id": 2,
+    "title": "行動應用程式",
+    "description": "跨平台行動應用UI/UX設計與開發",
+    "image": "/assets/images/portfolio2.jpg",
+    "link": "https://example.com/project2",
+    "tags": "app mobile",
+    "category": "app"
+  }
+]

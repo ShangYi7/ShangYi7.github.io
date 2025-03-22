@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/dark-mode.css">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body class="light-mode">
     <nav class="navbar">
@@ -32,13 +34,124 @@
 
     <div id="particles-js"></div>
 
-    <section id="home" class="section">
+    <section id="hero" class="section">
+        <div class="hero-backdrop"></div>
         <div class="container">
-            <h1 class="title">歡迎來到我的個人網站</h1>
-            <p class="subtitle">前端開發者 | UI設計師 | 創意工程師</p>
-            <div class="button-container">
-                <button class="button-85" role="button">探索作品</button>
-                <button class="button-85" role="button">聯繫我</button>
+            <div class="hero-content animate__animated animate__fadeIn">
+                <h1 class="title">你好，我是 <span class="highlight">設計師</span></h1>
+                <p class="subtitle">前端開發者 | UI設計師 | 創意工程師</p>
+                <div class="hero-description">
+                    <p>專注於打造美觀且實用的數位體驗，融合創意與技術的專業人才</p>
+                </div>
+                <div class="button-container">
+                    <a href="portfolio.html" class="button-85" role="button">探索作品</a>
+                    <a href="#contact" class="button-85" role="button">聯繫我</a>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="featured-work" class="section">
+        <div class="container">
+            <h2 class="section-title">精選作品</h2>
+            <div class="featured-grid">
+                <div class="featured-item animate__animated animate__fadeInUp">
+                    <div class="featured-image">
+                        <img src="../assets/portfolio1.jpg" alt="響應式網站設計">
+                    </div>
+                    <div class="featured-info">
+                        <h3>響應式網站設計</h3>
+                        <p>使用HTML5、CSS3和JavaScript開發的響應式電商網站</p>
+                        <a href="portfolio.html" class="featured-link">查看詳情 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="featured-item animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="featured-image">
+                        <img src="../assets/portfolio2.jpg" alt="UI設計作品">
+                    </div>
+                    <div class="featured-info">
+                        <h3>UI設計作品</h3>
+                        <p>使用Figma設計的現代化UI界面與交互原型</p>
+                        <a href="portfolio.html" class="featured-link">查看詳情 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all">
+                <a href="portfolio.html" class="view-all-link">查看所有作品 <i class="fas fa-long-arrow-alt-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills-preview" class="section">
+        <div class="container">
+            <h2 class="section-title">核心技能</h2>
+            <div class="skills-preview-container">
+                <div class="skill-card animate__animated animate__fadeInLeft">
+                    <div class="skill-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>前端開發</h3>
+                    <p>精通HTML5、CSS3、JavaScript，以及React、Vue等前端框架</p>
+                </div>
+                <div class="skill-card animate__animated animate__fadeInUp">
+                    <div class="skill-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>UI/UX設計</h3>
+                    <p>擅長使用Figma、Adobe XD進行界面設計和原型製作</p>
+                </div>
+                <div class="skill-card animate__animated animate__fadeInRight">
+                    <div class="skill-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>響應式設計</h3>
+                    <p>專注於創建跨設備的流暢用戶體驗和適配性佳的界面</p>
+                </div>
+            </div>
+            <div class="view-all">
+                <a href="skills.html" class="view-all-link">查看所有技能 <i class="fas fa-long-arrow-alt-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">聯繫我</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>email@example.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+886 912 345 678</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>台北市, 台灣</p>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="您的姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="您的Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="您的訊息" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="button-85">發送訊息</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

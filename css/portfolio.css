@@ -58,13 +58,12 @@
 /* 卡片容器優化 */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: subgrid;
-    grid-template-rows: subgrid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 3rem;
-    padding: 2rem 2rem;
+    padding: 3rem 5rem;
+    will-change: transform;
     max-width: 1800px;
     margin: 0 auto;
-    grid-column: 1 / -1;
 }
 
 /* 卡片動畫性能優化 */
@@ -78,10 +77,9 @@
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     aspect-ratio: 16/9;
-    height: 300px;
-    margin: 0 auto;
+    height: auto;
+    margin: 1rem;
     width: calc(100% - 2rem);
-    max-width: 400px;
 }
 
 .portfolio-item:hover {
@@ -383,7 +381,7 @@
 @media (max-width: 1200px) {
     .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 3rem;
+        gap: 2rem;
         padding: 2rem 3rem;
     }
 }
@@ -391,15 +389,13 @@
 @media (max-width: 768px) {
     .portfolio-grid {
         grid-template-columns: 1fr;
-        padding: 1.5rem 1.5rem;
-        gap: 2.5rem;
+        padding: 1.5rem 2rem;
+        gap: 2rem;
     }
 
     .portfolio-item {
-        margin: 0 auto 1.5rem;
-        width: calc(100% - 2rem);
-        max-width: 400px;
-        height: 250px;
+        margin: 0.5rem;
+        width: calc(100% - 1rem);
     }
 
     .portfolio-filters {
@@ -423,12 +419,11 @@
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translate3d(0,20px,0);
-        will-change: opacity, transform;
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
-        transform: translateZ(0);
+        transform: translateY(0);
     }
 }
 

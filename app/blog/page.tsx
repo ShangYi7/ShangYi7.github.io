@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { getAllPosts, getAllCategories, getAllTags } from '@/lib/posts'
 import { BlogClient } from '@/components/blog/BlogClient'
 
@@ -14,10 +15,12 @@ export default async function BlogPage() {
   ])
 
   return (
-    <BlogClient 
-      initialPosts={allPosts}
-      categories={allCategories}
-      tags={allTags}
-    />
+    <Suspense fallback={<div>Loading...</div>}>
+      <BlogClient 
+        initialPosts={allPosts}
+        categories={allCategories}
+        tags={allTags}
+      />
+    </Suspense>
   )
 }

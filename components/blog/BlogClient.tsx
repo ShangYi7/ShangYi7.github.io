@@ -16,17 +16,17 @@ export function BlogClient({ initialPosts, categories, tags }: BlogClientProps) 
   const [loading, setLoading] = useState(false)
 
   // Handle search
-  const handleSearch = async (query: string) => {
+  const handleSearch = (query: string) => {
     setLoading(true)
     try {
       if (query.trim()) {
-        const response = await fetch(`/api/posts/search?q=${encodeURIComponent(query)}`)
-        if (response.ok) {
-          const results = await response.json()
-          setFilteredPosts(results)
-        } else {
-          throw new Error('Search failed')
-        }
+        const searchQuery = query.toLowerCase()
+        const results = initialPosts.filter(post => 
+          post.title.toLowerCase().includes(searchQuery) ||
+          post.summary.toLowerCase().includes(searchQuery) ||
+          post.tags.some(tag => tag.toLowerCase().includes(searchQuery))
+        )
+        setFilteredPosts(results)
       } else {
         setFilteredPosts(initialPosts)
       }
@@ -39,17 +39,12 @@ export function BlogClient({ initialPosts, categories, tags }: BlogClientProps) 
   }
 
   // Handle category filter
-  const handleCategoryFilter = async (category: string | null) => {
+  const handleCategoryFilter = (category: string | null) => {
     setLoading(true)
     try {
       if (category) {
-        const response = await fetch(`/api/posts/category?category=${encodeURIComponent(category)}`)
-        if (response.ok) {
-          const results = await response.json()
-          setFilteredPosts(results)
-        } else {
-          throw new Error('Category filter failed')
-        }
+        const results = initialPosts.filter(post => post.categories.includes(category))
+        setFilteredPosts(results)
       } else {
         setFilteredPosts(initialPosts)
       }
@@ -62,17 +57,12 @@ export function BlogClient({ initialPosts, categories, tags }: BlogClientProps) 
   }
 
   // Handle tag filter
-  const handleTagFilter = async (tag: string | null) => {
+  const handleTagFilter = (tag: string | null) => {
     setLoading(true)
     try {
       if (tag) {
-        const response = await fetch(`/api/posts/tag?tag=${encodeURIComponent(tag)}`)
-        if (response.ok) {
-          const results = await response.json()
-          setFilteredPosts(results)
-        } else {
-          throw new Error('Tag filter failed')
-        }
+        const results = initialPosts.filter(post => post.tags.includes(tag))
+        setFilteredPosts(results)
       } else {
         setFilteredPosts(initialPosts)
       }

@@ -3,8 +3,7 @@ import { getPostsByTag } from '@/lib/posts'
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url)
-    const tag = searchParams.get('tag')
+    const tag = request.nextUrl.searchParams.get('tag')
     
     if (!tag) {
       return NextResponse.json({ error: 'Tag parameter is required' }, { status: 400 })

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getGitHubUser, getGitHubRepos, getGitHubEvents } from '@/lib/github'
 import { formatDate } from '@/lib/utils'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
@@ -79,9 +80,11 @@ export async function GitHubActivity() {
                   <CardHeader>
                     <div className="flex items-center space-x-4 mb-4">
                       {user.avatar_url && (
-                        <img
+                        <Image
                           src={user.avatar_url}
                           alt={user.name || user.login}
+                          width={64}
+                          height={64}
                           className="w-16 h-16 rounded-full border-2 border-accent-500/30"
                         />
                       )}

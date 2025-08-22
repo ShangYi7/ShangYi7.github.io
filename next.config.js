@@ -14,12 +14,15 @@ const withMDX = require('@next/mdx')({
 })
 
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   experimental: {
     mdxRs: false,
   },
   images: {
     domains: ['github.com', 'avatars.githubusercontent.com'],
+    unoptimized: true,
   },
   async generateBuildId() {
     return 'build-' + Date.now()

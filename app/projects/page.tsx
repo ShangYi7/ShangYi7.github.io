@@ -157,8 +157,8 @@ export default function ProjectsPage() {
             My <span className="gradient-text">Projects</span>
           </h1>
           <p className="text-xl text-foreground-muted max-w-2xl mx-auto">
-            A collection of projects I've built, contributed to, and open-sourced.
-            From web applications to developer tools, here's what I've been working on.
+            A collection of projects I&apos;ve built, contributed to, and open-sourced.
+            From web applications to developer tools, here&apos;s what I&apos;ve been working on.
           </p>
         </div>
 
@@ -180,7 +180,7 @@ export default function ProjectsPage() {
 
         {/* Featured Projects */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-white mb-8">Featured Projects</h2>
+          <h2 className="text-3xl font-bold mb-8" style={{ color: 'var(--foreground)' }}>Featured Projects</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {featuredProjects.map((project) => (
               <Card key={project.name} hover className="group h-full flex flex-col">
@@ -268,13 +268,13 @@ export default function ProjectsPage() {
         {/* Call to Action */}
         <Card className="glass-medium mt-16">
           <CardContent className="p-8 text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">
+            <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
               Interested in collaborating?
             </h3>
             <p className="text-foreground-muted mb-6 max-w-2xl mx-auto">
-              I'm always open to interesting projects and collaborations. 
+              I&apos;m always open to interesting projects and collaborations. 
               Whether you have an idea for a new project or want to contribute to existing ones, 
-              let's build something amazing together!
+              let&apos;s build something amazing together!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild variant="accent" size="lg">

@@ -110,8 +110,8 @@ export default function AboutPage() {
           </CardHeader>
           <CardContent className="prose prose-invert max-w-none">
             <p>
-              Hello! I'm ShangYi7, a passionate developer who loves crafting digital experiences that make a difference. 
-              My journey in technology started several years ago, and I've been fascinated by the endless possibilities 
+              Hello! I&apos;m ShangYi7, a passionate developer who loves crafting digital experiences that make a difference. 
+              My journey in technology started several years ago, and I&apos;ve been fascinated by the endless possibilities 
               that code can bring to life.
             </p>
             <p>
@@ -120,8 +120,8 @@ export default function AboutPage() {
               technologies and best practices.
             </p>
             <p>
-              When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, 
-              or sharing my knowledge through blog posts and tutorials. I'm always excited to collaborate on interesting 
+              When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source projects, 
+              or sharing my knowledge through blog posts and tutorials. I&apos;m always excited to collaborate on interesting 
               projects and connect with fellow developers.
             </p>
           </CardContent>
@@ -183,7 +183,7 @@ export default function AboutPage() {
 
         {/* Connect Section */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-white mb-8">Let's Connect</h2>
+          <h2 className="text-3xl font-bold text-white mb-8">Let&apos;s Connect</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
             {socialLinks.map((link) => {
               const Icon = link.icon
@@ -211,7 +211,7 @@ export default function AboutPage() {
                 Interested in working together?
               </h3>
               <p className="text-foreground-muted mb-6">
-                I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology.
+                I&apos;m always open to discussing new opportunities, interesting projects, or just having a chat about technology.
               </p>
               <Button asChild variant="accent" size="lg">
                 <Link href="mailto:contact@shangyi7.com">

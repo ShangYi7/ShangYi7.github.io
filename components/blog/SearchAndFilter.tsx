@@ -109,7 +109,7 @@ export function SearchAndFilter({
       <div className="mb-6">
         <Input
           type="search"
-          placeholder="搜尋文章標題、摘要或標籤..."
+          placeholder="搜索文章..."
           value={searchQuery}
           onChange={(e) => handleSearchChange(e.target.value)}
           className="w-full"
@@ -195,7 +195,7 @@ export function SearchAndFilter({
             <div className="flex flex-wrap gap-2">
               {searchQuery && (
                 <span className="px-3 py-1 bg-accent-500/20 text-accent-400 rounded-full text-sm">
-                  搜尋: "{searchQuery}"
+                  搜尋: &quot;{searchQuery}&quot;
                 </span>
               )}
               {selectedCategory && (

@@ -14,14 +14,13 @@ function HeroSection() {
         <div className="text-center">
           <div className="animate-fade-in">
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6">
-              Hi, I'm{' '}
+              Hi, I&apos;m{' '}
               <span className="gradient-text animate-glow">
                 ShangYi7
               </span>
             </h1>
             <p className="text-xl sm:text-2xl text-foreground-muted mb-8 max-w-3xl mx-auto leading-relaxed">
-              A passionate developer crafting digital experiences with modern technologies.
-              Welcome to my corner of the internet where I share my journey in code.
+              我是 ShangYi7，一名熱愛創新的全端開發者
             </p>
           </div>
           

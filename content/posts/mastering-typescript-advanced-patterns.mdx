@@ -1,0 +1,454 @@
+---
+title: "Mastering TypeScript: Advanced Patterns and Techniques"
+date: "2024-01-10"
+categories: ["技術"]
+tags: ["TypeScript", "JavaScript", "Programming", "Type Safety"]
+summary: "Dive deep into advanced TypeScript patterns including conditional types, mapped types, and utility types to write more maintainable and type-safe code."
+draft: false
+---
+
+# Mastering TypeScript: Advanced Patterns and Techniques
+
+TypeScript has evolved far beyond a simple type checker for JavaScript. With its advanced type system, you can create sophisticated type-safe applications that catch errors at compile time and provide excellent developer experience. Let's explore some advanced patterns that will take your TypeScript skills to the next level.
+
+## Conditional Types
+
+Conditional types allow you to create types that depend on a condition, similar to ternary operators in JavaScript.
+
+### Basic Conditional Types
+
+```typescript
+type IsString<T> = T extends string ? true : false
+
+type Test1 = IsString<string>  // true
+type Test2 = IsString<number>  // false
+```
+
+### Practical Example: API Response Types
+
+```typescript
+type ApiResponse<T> = T extends string
+  ? { message: T; status: 'success' }
+  : { data: T; status: 'success' } | { error: string; status: 'error' }
+
+type StringResponse = ApiResponse<string>
+// { message: string; status: 'success' }
+
+type DataResponse = ApiResponse<User[]>
+// { data: User[]; status: 'success' } | { error: string; status: 'error' }
+```
+
+### Distributive Conditional Types
+
+```typescript
+type ToArray<T> = T extends any ? T[] : never
+
+type StringOrNumberArray = ToArray<string | number>
+// string[] | number[] (not (string | number)[])
+```
+
+## Mapped Types
+
+Mapped types allow you to create new types by transforming properties of existing types.
+
+### Basic Mapped Types
+
+```typescript
+type Readonly<T> = {
+  readonly [P in keyof T]: T[P]
+}
+
+type Partial<T> = {
+  [P in keyof T]?: T[P]
+}
+
+interface User {
+  id: number
+  name: string
+  email: string
+}
+
+type ReadonlyUser = Readonly<User>
+type PartialUser = Partial<User>
+```
+
+### Advanced Mapped Types with Key Remapping
+
+```typescript
+// Add prefix to all keys
+type Prefixed<T, P extends string> = {
+  [K in keyof T as `${P}${string & K}`]: T[K]
+}
+
+type PrefixedUser = Prefixed<User, 'user_'>
+// {
+//   user_id: number
+//   user_name: string
+//   user_email: string
+// }
+
+// Filter properties by type
+type StringProperties<T> = {
+  [K in keyof T as T[K] extends string ? K : never]: T[K]
+}
+
+type UserStringProps = StringProperties<User>
+// { name: string; email: string }
+```
+
+## Template Literal Types
+
+Template literal types provide powerful string manipulation at the type level.
+
+```typescript
+type EventName<T extends string> = `on${Capitalize<T>}`
+
+type ClickEvent = EventName<'click'>  // 'onClick'
+type HoverEvent = EventName<'hover'>  // 'onHover'
+
+// Route parameters extraction
+type ExtractRouteParams<T extends string> = 
+  T extends `${string}:${infer Param}/${infer Rest}`
+    ? { [K in Param | keyof ExtractRouteParams<Rest>]: string }
+    : T extends `${string}:${infer Param}`
+    ? { [K in Param]: string }
+    : {}
+
+type RouteParams = ExtractRouteParams<'/users/:id/posts/:postId'>
+// { id: string; postId: string }
+```
+
+## Utility Types Deep Dive
+
+### Custom Utility Types
+
+```typescript
+// Deep partial - makes all nested properties optional
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P]
+}
+
+// Non-nullable - removes null and undefined
+type NonNullable<T> = T extends null | undefined ? never : T
+
+// Function property names
+type FunctionPropertyNames<T> = {
+  [K in keyof T]: T[K] extends Function ? K : never
+}[keyof T]
+
+type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>
+
+class MyClass {
+  name: string = ''
+  age: number = 0
+  getName(): string { return this.name }
+  setAge(age: number): void { this.age = age }
+}
+
+type ClassMethods = FunctionProperties<MyClass>
+// { getName: () => string; setAge: (age: number) => void }
+```
+
+### Advanced Utility Combinations
+
+```typescript
+// Require specific properties while keeping others optional
+type RequireFields<T, K extends keyof T> = T & Required<Pick<T, K>>
+
+interface CreateUserRequest {
+  name?: string
+  email?: string
+  age?: number
+  role?: string
+}
+
+type ValidCreateUserRequest = RequireFields<CreateUserRequest, 'name' | 'email'>
+// name and email are required, age and role remain optional
+```
+
+## Generic Constraints and Inference
+
+### Advanced Generic Constraints
+
+```typescript
+// Constrain to objects with specific properties
+interface Identifiable {
+  id: string | number
+}
+
+function updateEntity<T extends Identifiable>(
+  entity: T,
+  updates: Partial<Omit<T, 'id'>>
+): T {
+  return { ...entity, ...updates }
+}
+
+// Constrain to specific string patterns
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+
+function createApiCall<M extends HttpMethod>(
+  method: M,
+  url: string
+): M extends 'GET' ? () => Promise<any> : (data: any) => Promise<any> {
+  // Implementation
+  return null as any
+}
+```
+
+### Infer Keyword Magic
+
+```typescript
+// Extract return type from function
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never
+
+// Extract array element type
+type ArrayElement<T> = T extends (infer U)[] ? U : never
+
+type StringArray = ArrayElement<string[]>  // string
+
+// Extract promise value type
+type Awaited<T> = T extends Promise<infer U> ? U : T
+
+type PromiseValue = Awaited<Promise<string>>  // string
+
+// Complex inference example
+type GetFirstParameter<T> = T extends (first: infer F, ...args: any[]) => any ? F : never
+
+function example(name: string, age: number, active: boolean) {}
+
+type FirstParam = GetFirstParameter<typeof example>  // string
+```
+
+## Branded Types
+
+Branded types help create distinct types from primitive types for better type safety.
+
+```typescript
+// Create branded types
+type Brand<T, B> = T & { __brand: B }
+
+type UserId = Brand<string, 'UserId'>
+type Email = Brand<string, 'Email'>
+type PostId = Brand<number, 'PostId'>
+
+// Helper functions to create branded types
+function createUserId(id: string): UserId {
+  // Validation logic here
+  return id as UserId
+}
+
+function createEmail(email: string): Email {
+  if (!email.includes('@')) {
+    throw new Error('Invalid email')
+  }
+  return email as Email
+}
+
+// Usage
+function getUser(id: UserId): User {
+  // Implementation
+  return {} as User
+}
+
+const userId = createUserId('user-123')
+const user = getUser(userId)  // ✅ Works
+
+// This would cause a type error:
+// const user = getUser('user-123')  // ❌ Error: string is not assignable to UserId
+```
+
+## Advanced Function Types
+
+### Function Overloads with Generics
+
+```typescript
+interface ApiClient {
+  get<T>(url: string): Promise<T>
+  get<T>(url: string, config: RequestConfig): Promise<T>
+  post<T, D>(url: string, data: D): Promise<T>
+  post<T, D>(url: string, data: D, config: RequestConfig): Promise<T>
+}
+
+// Implementation with conditional types
+type ApiMethod<T extends 'GET' | 'POST'> = T extends 'GET'
+  ? <R>(url: string, config?: RequestConfig) => Promise<R>
+  : <R, D>(url: string, data: D, config?: RequestConfig) => Promise<R>
+```
+
+### Higher-Order Function Types
+
+```typescript
+// Curry function type
+type Curry<T> = T extends (arg: infer A, ...rest: infer R) => infer Return
+  ? R extends []
+    ? (arg: A) => Return
+    : (arg: A) => Curry<(...args: R) => Return>
+  : never
+
+function curry<T extends (...args: any[]) => any>(fn: T): Curry<T> {
+  return ((...args: any[]) => {
+    if (args.length >= fn.length) {
+      return fn(...args)
+    }
+    return curry(fn.bind(null, ...args))
+  }) as Curry<T>
+}
+
+// Usage
+function add(a: number, b: number, c: number): number {
+  return a + b + c
+}
+
+const curriedAdd = curry(add)
+const result = curriedAdd(1)(2)(3)  // number
+```
+
+## Real-World Application: Type-Safe Event System
+
+```typescript
+// Define event map
+interface EventMap {
+  'user:login': { userId: string; timestamp: Date }
+  'user:logout': { userId: string }
+  'post:created': { postId: string; authorId: string; title: string }
+  'post:updated': { postId: string; changes: string[] }
+}
+
+// Type-safe event emitter
+class TypedEventEmitter<T extends Record<string, any>> {
+  private listeners: {
+    [K in keyof T]?: Array<(data: T[K]) => void>
+  } = {}
+
+  on<K extends keyof T>(event: K, listener: (data: T[K]) => void): void {
+    if (!this.listeners[event]) {
+      this.listeners[event] = []
+    }
+    this.listeners[event]!.push(listener)
+  }
+
+  emit<K extends keyof T>(event: K, data: T[K]): void {
+    const eventListeners = this.listeners[event]
+    if (eventListeners) {
+      eventListeners.forEach(listener => listener(data))
+    }
+  }
+
+  off<K extends keyof T>(event: K, listener: (data: T[K]) => void): void {
+    const eventListeners = this.listeners[event]
+    if (eventListeners) {
+      const index = eventListeners.indexOf(listener)
+      if (index > -1) {
+        eventListeners.splice(index, 1)
+      }
+    }
+  }
+}
+
+// Usage
+const emitter = new TypedEventEmitter<EventMap>()
+
+// ✅ Type-safe event listening
+emitter.on('user:login', (data) => {
+  console.log(`User ${data.userId} logged in at ${data.timestamp}`)
+})
+
+// ✅ Type-safe event emission
+emitter.emit('user:login', {
+  userId: 'user-123',
+  timestamp: new Date()
+})
+
+// ❌ This would cause type errors:
+// emitter.on('invalid:event', () => {})  // Unknown event
+// emitter.emit('user:login', { userId: 123 })  // Wrong data type
+```
+
+## Performance Considerations
+
+### Type-Level Performance
+
+```typescript
+// Avoid deeply recursive types
+// ❌ This can cause performance issues
+type DeepFlatten<T> = T extends (infer U)[]
+  ? U extends any[]
+    ? DeepFlatten<U>
+    : U
+  : T
+
+// ✅ Better: Limit recursion depth
+type SafeDeepFlatten<T, Depth extends number = 5> = 
+  Depth extends 0
+    ? T
+    : T extends (infer U)[]
+    ? U extends any[]
+      ? SafeDeepFlatten<U, Prev<Depth>>
+      : U
+    : T
+
+type Prev<T extends number> = T extends 0 ? 0 : T extends 1 ? 0 : T extends 2 ? 1 : T extends 3 ? 2 : T extends 4 ? 3 : T extends 5 ? 4 : never
+```
+
+## Best Practices
+
+1. **Use strict TypeScript configuration**
+   ```json
+   {
+     "compilerOptions": {
+       "strict": true,
+       "noUncheckedIndexedAccess": true,
+       "exactOptionalPropertyTypes": true
+     }
+   }
+   ```
+
+2. **Prefer type assertions over any**
+   ```typescript
+   // ❌ Avoid
+   const data = response as any
+   
+   // ✅ Better
+   const data = response as ApiResponse<User>
+   
+   // ✅ Best
+   function isApiResponse<T>(obj: unknown): obj is ApiResponse<T> {
+     return typeof obj === 'object' && obj !== null && 'status' in obj
+   }
+   ```
+
+3. **Use const assertions for immutable data**
+   ```typescript
+   // ❌ Type is string[]
+   const colors = ['red', 'green', 'blue']
+   
+   // ✅ Type is readonly ['red', 'green', 'blue']
+   const colors = ['red', 'green', 'blue'] as const
+   ```
+
+4. **Leverage discriminated unions**
+   ```typescript
+   type Result<T> = 
+     | { success: true; data: T }
+     | { success: false; error: string }
+   
+   function handleResult<T>(result: Result<T>) {
+     if (result.success) {
+       // TypeScript knows result.data exists
+       console.log(result.data)
+     } else {
+       // TypeScript knows result.error exists
+       console.error(result.error)
+     }
+   }
+   ```
+
+## Conclusion
+
+Advanced TypeScript patterns enable you to build more robust, maintainable applications with excellent developer experience. By leveraging conditional types, mapped types, template literals, and sophisticated generic constraints, you can create type systems that catch errors early and provide meaningful IntelliSense.
+
+Remember that with great power comes great responsibility – use these advanced features judiciously and always prioritize code readability and maintainability over clever type gymnastics.
+
+The key is to find the right balance between type safety and complexity, ensuring your types serve your application's needs without becoming a burden for your development team.
+
+Happy typing! 🎯

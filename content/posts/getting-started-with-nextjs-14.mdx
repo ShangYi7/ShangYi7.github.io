@@ -1,0 +1,320 @@
+---
+title: "Getting Started with Next.js 14: A Complete Guide"
+date: "2024-01-15"
+categories: ["技術"]
+tags: ["Next.js", "React", "Web Development", "TypeScript"]
+summary: "Learn how to build modern web applications with Next.js 14 and the new App Router. This comprehensive guide covers everything from setup to deployment."
+draft: false
+---
+
+# Getting Started with Next.js 14: A Complete Guide
+
+Next.js 14 brings exciting new features and improvements that make building React applications even more powerful and developer-friendly. In this comprehensive guide, we'll explore the key features and learn how to build a modern web application from scratch.
+
+## What's New in Next.js 14
+
+Next.js 14 introduces several groundbreaking features:
+
+### 1. Turbopack (Beta)
+Turbopack is Vercel's new bundler built in Rust, offering:
+- **53% faster local server startup**
+- **5x faster updates** than Webpack
+- Built-in support for TypeScript, JSX, CSS, and more
+
+### 2. Server Actions (Stable)
+Server Actions provide a seamless way to handle server-side logic:
+
+```typescript
+// app/actions.ts
+'use server'
+
+export async function createPost(formData: FormData) {
+  const title = formData.get('title') as string
+  const content = formData.get('content') as string
+  
+  // Save to database
+  await db.post.create({
+    data: { title, content }
+  })
+  
+  revalidatePath('/posts')
+}
+```
+
+### 3. Partial Prerendering (Preview)
+This experimental feature combines the benefits of static and dynamic rendering:
+- Static shell loads instantly
+- Dynamic content streams in progressively
+- Better Core Web Vitals scores
+
+## Setting Up Your Next.js 14 Project
+
+Let's create a new Next.js 14 project with TypeScript and Tailwind CSS:
+
+```bash
+npx create-next-app@latest my-app --typescript --tailwind --eslint --app
+cd my-app
+npm run dev
+```
+
+### Project Structure
+
+Next.js 14 uses the App Router by default:
+
+```
+my-app/
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── loading.tsx
+├── components/
+├── lib/
+├── public/
+└── package.json
+```
+
+## Key Concepts
+
+### App Router
+
+The App Router introduces a new way to structure your application:
+
+```typescript
+// app/blog/[slug]/page.tsx
+interface PageProps {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default function BlogPost({ params }: PageProps) {
+  return (
+    <article>
+      <h1>Post: {params.slug}</h1>
+    </article>
+  )
+}
+```
+
+### Server and Client Components
+
+Next.js 14 uses React Server Components by default:
+
+```typescript
+// Server Component (default)
+export default async function ServerComponent() {
+  const data = await fetch('https://api.example.com/data')
+  const posts = await data.json()
+  
+  return (
+    <div>
+      {posts.map(post => (
+        <PostCard key={post.id} post={post} />
+      ))}
+    </div>
+  )
+}
+
+// Client Component
+'use client'
+
+import { useState } from 'react'
+
+export default function ClientComponent() {
+  const [count, setCount] = useState(0)
+  
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  )
+}
+```
+
+### Data Fetching
+
+Next.js 14 provides multiple ways to fetch data:
+
+```typescript
+// Static data fetching
+async function getStaticData() {
+  const res = await fetch('https://api.example.com/posts', {
+    cache: 'force-cache' // Static generation
+  })
+  return res.json()
+}
+
+// Dynamic data fetching
+async function getDynamicData() {
+  const res = await fetch('https://api.example.com/posts', {
+    cache: 'no-store' // Server-side rendering
+  })
+  return res.json()
+}
+
+// Revalidated data fetching
+async function getRevalidatedData() {
+  const res = await fetch('https://api.example.com/posts', {
+    next: { revalidate: 3600 } // Revalidate every hour
+  })
+  return res.json()
+}
+```
+
+## Advanced Features
+
+### Metadata API
+
+Next.js 14 provides a powerful Metadata API for SEO:
+
+```typescript
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'My Blog Post',
+  description: 'An amazing blog post about Next.js 14',
+  openGraph: {
+    title: 'My Blog Post',
+    description: 'An amazing blog post about Next.js 14',
+    images: ['/og-image.jpg'],
+  },
+}
+```
+
+### Route Handlers
+
+Create API endpoints with the new Route Handlers:
+
+```typescript
+// app/api/posts/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+
+export async function GET(request: NextRequest) {
+  const posts = await getPosts()
+  return NextResponse.json(posts)
+}
+
+export async function POST(request: NextRequest) {
+  const body = await request.json()
+  const post = await createPost(body)
+  return NextResponse.json(post, { status: 201 })
+}
+```
+
+### Streaming and Suspense
+
+Improve user experience with streaming:
+
+```typescript
+import { Suspense } from 'react'
+
+function LoadingSkeleton() {
+  return <div className="animate-pulse bg-gray-200 h-4 rounded" />
+}
+
+export default function Page() {
+  return (
+    <div>
+      <h1>My Page</h1>
+      <Suspense fallback={<LoadingSkeleton />}>
+        <SlowComponent />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+## Performance Optimization
+
+### Image Optimization
+
+Next.js provides automatic image optimization:
+
+```typescript
+import Image from 'next/image'
+
+export default function MyComponent() {
+  return (
+    <Image
+      src="/hero.jpg"
+      alt="Hero image"
+      width={800}
+      height={600}
+      priority // Load above the fold images first
+      placeholder="blur" // Show blur while loading
+      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..."
+    />
+  )
+}
+```
+
+### Font Optimization
+
+Optimize fonts with next/font:
+
+```typescript
+import { Inter, Roboto_Mono } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function Layout({ children }) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+## Deployment
+
+### Vercel Deployment
+
+Deploy to Vercel with zero configuration:
+
+```bash
+npm i -g vercel
+vercel
+```
+
+### Environment Variables
+
+Manage environment variables:
+
+```bash
+# .env.local
+DATABASE_URL="postgresql://..."
+NEXTAUTH_SECRET="your-secret"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+## Best Practices
+
+1. **Use Server Components by default** - Only use Client Components when necessary
+2. **Optimize images and fonts** - Use Next.js built-in optimization features
+3. **Implement proper error handling** - Use error.tsx and not-found.tsx files
+4. **Follow the principle of least privilege** - Only fetch data where needed
+5. **Use TypeScript** - Leverage type safety for better development experience
+
+## Conclusion
+
+Next.js 14 represents a significant step forward in React development, offering improved performance, better developer experience, and powerful new features. The App Router, Server Components, and enhanced data fetching capabilities make it easier than ever to build fast, scalable web applications.
+
+Whether you're building a simple blog or a complex e-commerce platform, Next.js 14 provides the tools and optimizations you need to create exceptional user experiences.
+
+## Resources
+
+- [Next.js 14 Documentation](https://nextjs.org/docs)
+- [App Router Guide](https://nextjs.org/docs/app)
+- [Next.js Examples](https://github.com/vercel/next.js/tree/canary/examples)
+- [Vercel Deployment Guide](https://vercel.com/docs)
+
+Happy coding! 🚀

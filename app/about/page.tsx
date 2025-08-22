@@ -141,7 +141,8 @@ export default function AboutPage() {
                     {skill.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 text-sm bg-white/10 rounded-full text-accent hover:bg-white/20 transition-colors duration-200"
+                        className="px-3 py-1 text-sm rounded-full text-accent transition-colors duration-200 hover:opacity-80"
+                        style={{ backgroundColor: 'var(--glass-bg)' }}
                       >
                         {tech}
                       </span>
@@ -167,7 +168,7 @@ export default function AboutPage() {
                         {exp.company}
                       </CardDescription>
                     </div>
-                    <span className="text-sm text-foreground-muted bg-white/10 px-3 py-1 rounded-full">
+                    <span className="text-sm text-foreground-muted px-3 py-1 rounded-full" style={{ backgroundColor: 'var(--glass-bg)' }}>
                       {exp.period}
                     </span>
                   </div>

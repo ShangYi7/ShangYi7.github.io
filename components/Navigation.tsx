@@ -3,8 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { useTheme } from './ThemeProvider'
-import { Moon, Sun, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 // 導航菜單配置
 // 定義網站的主要導航項目
@@ -25,7 +24,6 @@ const navigation = [
  */
 export function Navigation() {
   const pathname = usePathname()              // 獲取當前路徑
-  const { theme, setTheme } = useTheme()      // 獲取主題狀態和切換函數
   const [isOpen, setIsOpen] = useState(false) // 移動端菜單開關狀態
 
   return (
@@ -55,45 +53,33 @@ export function Navigation() {
                   href={item.href}
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'text-accent bg-white/10 glow'
-                      : 'text-foreground-muted hover:text-accent hover:bg-white/5'
+                      ? 'text-accent glow'
+                      : 'text-foreground-muted hover:text-accent'
                   }`}
+                  style={{
+                    backgroundColor: isActive ? 'var(--glass-bg)' : 'transparent'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.backgroundColor = 'var(--hover-bg)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.backgroundColor = 'transparent'
+                    }
+                  }}
                 >
                   {item.name}
                 </Link>
               )
             })}
 
-            {/* 主題切換按鈕 */}
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="glass-button p-2 rounded-lg"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
-            </button>
+
           </div>
 
-          {/* 移動端按鈕組 */}
-          <div className="md:hidden flex items-center space-x-2">
-            {/* 移動端主題切換按鈕 */}
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="glass-button p-2 rounded-lg"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
-            </button>
-
-            {/* 移動端菜單切換按鈕 */}
+          {/* 移動端菜單切換按鈕 */}
+          <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="glass-button p-2 rounded-lg"

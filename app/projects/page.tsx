@@ -100,7 +100,7 @@ async function GitHubRepositories() {
           <CardContent>
             <div className="flex items-center justify-between mb-4">
               {repo.language && (
-                <span className="px-3 py-1 text-xs bg-white/10 rounded-full text-accent">
+                <span className="px-3 py-1 text-xs rounded-full text-accent" style={{ backgroundColor: 'var(--glass-bg)' }}>
                   {repo.language}
                 </span>
               )}
@@ -127,13 +127,14 @@ async function GitHubRepositories() {
                 {repo.topics.slice(0, 3).map((topic) => (
                   <span
                     key={topic}
-                    className="px-2 py-1 text-xs bg-white/5 rounded text-foreground-muted"
+                    className="px-2 py-1 text-xs rounded text-foreground-muted"
+                    style={{ backgroundColor: 'var(--glass-bg)' }}
                   >
                     {topic}
                   </span>
                 ))}
                 {repo.topics.length > 3 && (
-                  <span className="px-2 py-1 text-xs bg-white/5 rounded text-foreground-muted">
+                  <span className="px-2 py-1 text-xs rounded text-foreground-muted" style={{ backgroundColor: 'var(--glass-bg)' }}>
                     +{repo.topics.length - 3}
                   </span>
                 )}
@@ -197,7 +198,8 @@ export default function ProjectsPage() {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 text-xs bg-white/10 rounded-full text-accent"
+                        className="px-2 py-1 text-xs rounded-full text-accent"
+                        style={{ backgroundColor: 'var(--glass-bg)' }}
                       >
                         {tech}
                       </span>
@@ -231,7 +233,7 @@ export default function ProjectsPage() {
         <div>
           <div className="flex justify-between items-center mb-8">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-2">All Repositories</h2>
+              <h2 className="text-3xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>All Repositories</h2>
               <p className="text-foreground-muted">
                 Explore all my public repositories on GitHub
               </p>

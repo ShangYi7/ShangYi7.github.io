@@ -140,7 +140,7 @@ export function SearchAndFilter({
         {/* Categories */}
         {categories.length > 0 && (
           <div>
-            <h3 className="text-sm font-medium text-gray-300 mb-3">分類</h3>
+            <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--foreground-muted)' }}>分類</h3>
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
                 <button
@@ -148,9 +148,13 @@ export function SearchAndFilter({
                   onClick={() => handleCategoryChange(category)}
                   className={`px-3 py-1 rounded-full text-sm transition-colors ${
                     selectedCategory === category
-                      ? 'bg-accent-500 text-white dark:text-white light:text-gray-900'
-                      : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                      ? 'bg-accent-500'
+                      : 'hover:opacity-80'
                   }`}
+                  style={{
+                    backgroundColor: selectedCategory === category ? 'var(--accent)' : 'var(--glass-bg)',
+                    color: selectedCategory === category ? '#ffffff' : 'var(--foreground-muted)'
+                  }}
                 >
                   {category}
                 </button>
@@ -162,7 +166,7 @@ export function SearchAndFilter({
         {/* Tags */}
         {tags.length > 0 && (
           <div>
-            <h3 className="text-sm font-medium text-gray-300 mb-3">標籤</h3>
+            <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--foreground-muted)' }}>標籤</h3>
             <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
               {tags.map((tag) => (
                 <button
@@ -170,9 +174,13 @@ export function SearchAndFilter({
                   onClick={() => handleTagChange(tag)}
                   className={`px-3 py-1 rounded-full text-sm transition-colors ${
                     selectedTag === tag
-                      ? 'bg-accent-500 text-white dark:text-white light:text-gray-900'
-                      : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                      ? 'bg-accent-500'
+                      : 'hover:opacity-80'
                   }`}
+                  style={{
+                    backgroundColor: selectedTag === tag ? 'var(--accent)' : 'var(--glass-bg)',
+                    color: selectedTag === tag ? '#ffffff' : 'var(--foreground-muted)'
+                  }}
                 >
                   #{tag}
                 </button>

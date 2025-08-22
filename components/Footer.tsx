@@ -76,7 +76,7 @@ export function Footer() {
           {/* Footer Links */}
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              <h3 className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: 'var(--foreground)' }}>
                 {section.title}
               </h3>
               <ul className="space-y-3">

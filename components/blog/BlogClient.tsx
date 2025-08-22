@@ -90,10 +90,10 @@ export function BlogClient({ initialPosts, categories, tags }: BlogClientProps) 
         <div className="max-w-6xl mx-auto">
           {/* Page header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
               技術文章
             </h1>
-            <p className="text-gray-400 text-lg">
+            <p className="text-lg" style={{ color: 'var(--foreground-muted)' }}>
               分享開發經驗與技術心得
             </p>
           </div>

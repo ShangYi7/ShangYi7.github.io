@@ -113,7 +113,7 @@ export function PostList({ posts, postsPerPage = 9 }: PostListProps) {
                     </Link>
                   ))}
                   {post.categories.length > 2 && (
-                    <span className="px-2 py-1 bg-white/10 text-gray-400 rounded text-xs">
+                    <span className="px-2 py-1 rounded text-xs" style={{ backgroundColor: 'var(--glass-bg)', color: 'var(--foreground-muted)' }}>
                       +{post.categories.length - 2}
                     </span>
                   )}
@@ -127,13 +127,14 @@ export function PostList({ posts, postsPerPage = 9 }: PostListProps) {
                     <Link
                       key={tag}
                       href={`/blog?tag=${encodeURIComponent(tag)}`}
-                      className="px-2 py-1 bg-white/5 text-gray-400 rounded text-xs hover:bg-white/10 transition-colors"
+                      className="px-2 py-1 rounded text-xs transition-colors hover:opacity-80"
+                      style={{ backgroundColor: 'var(--glass-bg)', color: 'var(--foreground-muted)' }}
                     >
                       #{tag}
                     </Link>
                   ))}
                   {post.tags.length > 4 && (
-                    <span className="px-2 py-1 bg-white/5 text-gray-500 rounded text-xs">
+                    <span className="px-2 py-1 rounded text-xs" style={{ backgroundColor: 'var(--glass-bg)', color: 'var(--foreground-muted)' }}>
                       +{post.tags.length - 4}
                     </span>
                   )}

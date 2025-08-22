@@ -138,15 +138,15 @@ export async function GitHubActivity() {
                     <CardContent>
                       <div className="space-y-4">
                         {events.slice(0, 5).map((event) => (
-                          <div key={event.id} className="flex items-start space-x-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                          <div key={event.id} className="flex items-start space-x-3 p-3 rounded-lg transition-colors hover:opacity-80" style={{ backgroundColor: 'var(--glass-bg)' }}>
                             <div className="flex-shrink-0 mt-1 text-accent-400">
                               {getEventIcon(event.type)}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm text-gray-300">
+                              <p className="text-sm" style={{ color: 'var(--foreground)' }}>
                                 {getEventDescription(event)}
                               </p>
-                              <p className="text-xs text-gray-500 mt-1">
+                              <p className="text-xs mt-1" style={{ color: 'var(--foreground-muted)' }}>
                                 {formatDate(event.created_at)}
                               </p>
                             </div>
@@ -167,7 +167,7 @@ export async function GitHubActivity() {
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {repos.slice(0, 4).map((repo) => (
-                        <div key={repo.id} className="p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                        <div key={repo.id} className="p-4 rounded-lg" style={{ backgroundColor: 'var(--glass-bg)' }}>
                           <div className="flex items-start justify-between mb-2">
                             <h4 className="font-medium text-foreground truncate">
                               <Link 
@@ -188,12 +188,12 @@ export async function GitHubActivity() {
                           </div>
                           
                           {repo.description && (
-                            <p className="text-sm text-gray-400 mb-3 line-clamp-2">
+                            <p className="text-sm mb-3 line-clamp-2" style={{ color: 'var(--foreground-muted)' }}>
                               {repo.description}
                             </p>
                           )}
                           
-                          <div className="flex items-center justify-between text-xs text-gray-500">
+                          <div className="flex items-center justify-between text-xs" style={{ color: 'var(--foreground-muted)' }}>
                             {repo.language && (
                               <span className="flex items-center">
                                 <span className="w-2 h-2 rounded-full bg-accent-400 mr-1" />

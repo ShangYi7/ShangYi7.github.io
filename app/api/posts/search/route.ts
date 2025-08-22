@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { searchPosts } from '@/lib/posts'
 
-export const dynamic = 'force-dynamic'
-
 export async function GET(request: NextRequest) {
   try {
     const query = request.nextUrl.searchParams.get('q')

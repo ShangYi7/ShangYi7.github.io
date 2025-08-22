@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { LanguageToggle, LanguageToggleCompact } from './LanguageToggle'
 
 // 導航菜單配置
 // 定義網站的主要導航項目
@@ -74,12 +75,17 @@ export function Navigation() {
                 </Link>
               )
             })}
-
-
+            
+            {/* 語言切換按鈕 */}
+            <LanguageToggle />
           </div>
 
-          {/* 移動端菜單切換按鈕 */}
-          <div className="md:hidden">
+          {/* 移動端控制區域 */}
+          <div className="md:hidden flex items-center space-x-2">
+            {/* 移動端語言切換按鈕 */}
+            <LanguageToggleCompact />
+            
+            {/* 移動端菜單切換按鈕 */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="glass-button p-2 rounded-lg"

@@ -6,6 +6,7 @@
 
 - 🎨 **玻璃擬態設計** - 現代化的毛玻璃效果和深色主題
 - 📱 **響應式設計** - 完美適配各種設備尺寸
+- 🌐 **多語言支持** - 中英文切換，智能翻譯，本地緩存
 - 📝 **MDX 部落格系統** - 支援 Markdown 和 React 組件
 - 🔍 **搜尋和篩選** - 文章搜尋、分類和標籤篩選
 - 🚀 **性能優化** - 代碼分割、圖片懶載入、SEO 優化
@@ -19,6 +20,8 @@
 - **語言**: TypeScript
 - **樣式**: Tailwind CSS
 - **內容**: MDX (Markdown + JSX)
+- **多語言**: Google Translate API, React Context
+- **動畫**: Framer Motion
 - **部署**: GitHub Pages
 - **API**: GitHub REST API
 - **圖標**: Lucide React
@@ -44,6 +47,9 @@
 │   ├── blog/               # 部落格組件
 │   │   ├── SearchAndFilter.tsx
 │   │   └── PostList.tsx
+│   ├── LanguageProvider.tsx # 語言管理 Context
+│   ├── LanguageToggle.tsx   # 語言切換按鈕
+│   ├── TranslatedText.tsx   # 翻譯組件
 │   └── ui/                 # UI 組件
 │       ├── Card.tsx
 │       ├── Button.tsx
@@ -53,6 +59,7 @@
 ├── lib/                    # 工具函數
 │   ├── posts.ts            # 文章管理
 │   ├── github.ts           # GitHub API
+│   ├── translationCache.ts # 翻譯緩存管理
 │   └── utils.ts            # 通用工具
 ├── public/                 # 靜態資源
 └── styles/                 # 樣式文件
@@ -83,12 +90,15 @@
    ```
 
 3. **環境變數設置**
-   
+
    創建 `.env.local` 文件：
    ```env
    # GitHub 配置 (可選)
    NEXT_PUBLIC_GITHUB_USERNAME=你的GitHub用戶名
    GITHUB_TOKEN=你的GitHub個人訪問令牌
+
+   # Google Translate API (可選，用於多語言功能)
+   GOOGLE_TRANSLATE_API_KEY=你的Google翻譯API密鑰
    ```
 
 4. **啟動開發服務器**
@@ -101,8 +111,129 @@
    ```
 
 5. **訪問網站**
-   
+
    打開瀏覽器訪問 [http://localhost:3000](http://localhost:3000)
+
+## 🌐 多語言功能
+
+### 語言切換
+
+網站支援中英文切換，用戶可以通過導航欄右上角的語言切換按鈕在中文和英文之間切換。
+
+展示：http://localhost:3000/demo
+
+### 翻譯組件
+
+#### TranslatedText 組件
+
+用於翻譯單個文本內容：
+
+```tsx
+import { TranslatedText } from '@/components/TranslatedText'
+
+// 基本使用
+<TranslatedText text="你好，世界！" />
+
+// 自定義樣式
+<TranslatedText
+  text="歡迎來到我的網站"
+  className="text-lg font-bold"
+/>
+
+// 跳過翻譯（保持原文不變）
+<TranslatedText
+  text="API Key"
+  skipTranslation={true}
+/>
+```
+
+#### TranslatedContainer 組件
+
+用於翻譯包含多個文本元素的容器：
+
+```tsx
+import { TranslatedContainer } from '@/components/TranslatedText'
+
+<TranslatedContainer>
+  <h1>關於我</h1>
+  <p>這是一段介紹文字</p>
+  <span>更多信息</span>
+</TranslatedContainer>
+
+// 跳過翻譯整個容器
+<TranslatedContainer skipTranslation={true}>
+  <h1>Technical Terms</h1>
+  <p>API, SDK, JSON</p>
+</TranslatedContainer>
+```
+
+#### TranslatedMDX 組件
+
+專門用於翻譯 MDX 文章內容：
+
+```tsx
+import { TranslatedMDX } from '@/components/TranslatedText'
+
+<TranslatedMDX>
+  <MDXContent />
+</TranslatedMDX>
+
+// 跳過翻譯 MDX 內容
+<TranslatedMDX skipTranslation={true}>
+  <MDXContent />
+</TranslatedMDX>
+```
+
+### skipTranslation 屬性
+
+所有翻譯組件都支援 `skipTranslation` 屬性，用於跳過翻譯：
+
+- **用途**: 保持技術術語、品牌名稱、代碼等內容不被翻譯
+- **適用場景**: API 名稱、專有名詞、代碼片段、已經是英文的內容
+- **使用方式**: 設置 `skipTranslation={true}` 即可
+
+```tsx
+// 示例：保持技術術語不被翻譯
+<TranslatedText text="React Hook" skipTranslation={true} />
+<TranslatedText text="TypeScript" skipTranslation={true} />
+<TranslatedText text="Next.js" skipTranslation={true} />
+```
+
+### 翻譯緩存
+
+系統自動緩存翻譯結果到 localStorage，提高性能並減少 API 調用：
+
+- **智能緩存**: 自動緩存翻譯結果
+- **過期管理**: 7天後自動清理過期緩存
+- **LRU 策略**: 當緩存達到限制時自動清理最少使用的項目
+- **統計功能**: 提供緩存命中率和使用統計
+
+### 語言管理 Hook
+
+使用 `useLanguage` Hook 管理語言狀態：
+
+```tsx
+import { useLanguage } from '@/components/LanguageProvider'
+
+function MyComponent() {
+  const {
+    language,
+    setLanguage,
+    translate,
+    isTranslating
+  } = useLanguage()
+
+  return (
+    <div>
+      <p>當前語言: {language}</p>
+      <button onClick={() => setLanguage(language === 'zh' ? 'en' : 'zh')}>
+        切換語言
+      </button>
+      {isTranslating && <p>翻譯中...</p>}
+    </div>
+  )
+}
+```
 
 ## 📝 內容管理
 
@@ -164,6 +295,29 @@ draft: false
 
 1. `NEXT_PUBLIC_GITHUB_USERNAME`: 你的 GitHub 用戶名
 2. `GITHUB_TOKEN`: GitHub 個人訪問令牌 (可選，用於提高 API 限制)
+
+### 多語言配置
+
+要啟用多語言翻譯功能，需要設置 Google Translate API：
+
+1. **獲取 API 密鑰**:
+   - 前往 [Google Cloud Console](https://console.cloud.google.com/)
+   - 創建新項目或選擇現有項目
+   - 啟用 Google Translate API
+   - 創建 API 密鑰
+
+2. **設置環境變數**:
+   ```env
+   GOOGLE_TRANSLATE_API_KEY=你的Google翻譯API密鑰
+   ```
+
+3. **功能特性**:
+   - 支援中英文雙向翻譯
+   - 智能緩存機制，減少 API 調用
+   - 自動檢測和翻譯中文內容
+   - 保持原有格式和樣式
+
+**注意**: 如果未設置 API 密鑰，翻譯功能將使用預設的常用翻譯對照表，功能會受到限制。
 
 ### SEO 配置
 
@@ -235,6 +389,49 @@ npm run type-check   # 執行 TypeScript 類型檢查
 - 使用 `useMemo` 和 `useCallback` 優化計算和函數
 - 圖片使用 Next.js Image 組件進行優化
 - 代碼分割和懶載入
+- 翻譯結果智能緩存，減少 API 調用
+- 防抖機制避免頻繁翻譯請求
+
+### 多語言開發
+
+#### 測試多語言功能
+
+訪問 `/demo` 頁面可以測試完整的多語言功能：
+
+```bash
+npm run dev
+# 訪問 http://localhost:3001/demo
+```
+
+#### 添加新語言支持
+
+1. **擴展語言類型**:
+   ```typescript
+   // 在 LanguageProvider.tsx 中
+   export type Language = 'zh' | 'en' | 'ja' // 添加日文支持
+   ```
+
+2. **更新翻譯 API**:
+   ```typescript
+   // 在 app/api/translate/route.ts 中添加新語言邏輯
+   ```
+
+3. **添加語言選項**:
+   ```typescript
+   // 在 LanguageToggle.tsx 中添加新的語言選項
+   ```
+
+#### 自定義翻譯邏輯
+
+可以通過修改 `translationCache.ts` 來自定義翻譯行為：
+
+```typescript
+// 添加自定義翻譯對照表
+const customTranslations = {
+  '你的文本': 'Your Text',
+  // 更多翻譯對照
+}
+```
 
 ## 🤝 貢獻指南
 

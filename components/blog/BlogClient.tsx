@@ -75,7 +75,7 @@ export function BlogClient({ initialPosts, categories, tags }: BlogClientProps) 
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           {/* Page header */}

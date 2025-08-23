@@ -1,54 +1,25 @@
-import { Suspense } from 'react'
+'use client'
+
 import Link from 'next/link'
-import { Metadata } from 'next'
-import { Github, ExternalLink, Star, GitFork, Calendar } from 'lucide-react'
+import { Github, ExternalLink, Star, GitFork, Calendar, FileText } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { getGitHubRepos, getGitHubUser } from '@/lib/github'
+import { Pagination } from '@/components/ui/Pagination'
+import { getGitHubRepos, getGitHubUser, type GitHubRepo } from '@/lib/github'
+import { getPrivateProjects, type PrivateProject } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
+import { useState, useEffect } from 'react'
 
-export const metadata: Metadata = {
-  title: 'Projects',
-  description: 'Explore ShangYi7\'s projects and open-source contributions on GitHub.',
-}
+function GitHubStats({ user }: { user: any }) {
+  if (!user) return null
 
-const featuredProjects = [
-  {
-    name: 'Personal Website',
-    description: 'A modern personal website and blog built with Next.js 14, TypeScript, and Tailwind CSS featuring glassmorphism design.',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MDX'],
-    github: 'https://github.com/ShangYi7/shangyi7.github.io',
-    demo: 'https://shangyi7.github.io',
-    featured: true
-  },
-  {
-    name: 'React Component Library',
-    description: 'A comprehensive React component library with TypeScript support, Storybook documentation, and automated testing.',
-    technologies: ['React', 'TypeScript', 'Storybook', 'Jest'],
-    github: 'https://github.com/ShangYi7/react-components',
-    demo: 'https://shangyi7-components.vercel.app',
-    featured: true
-  },
-  {
-    name: 'Task Management App',
-    description: 'A full-stack task management application with real-time updates, drag-and-drop functionality, and team collaboration features.',
-    technologies: ['Next.js', 'Prisma', 'PostgreSQL', 'Socket.io'],
-    github: 'https://github.com/ShangYi7/task-manager',
-    demo: 'https://task-manager-shangyi7.vercel.app',
-    featured: true
-  }
-]
-
-async function GitHubStats() {
-  const user = await getGitHubUser()
-  
   const stats = [
-    { label: 'Public Repositories', value: user.public_repos },
-    { label: 'Followers', value: user.followers },
-    { label: 'Following', value: user.following },
-    { label: 'Total Stars', value: '50+' }, // This would be calculated from all repos
+    { label: '公開存放庫', value: user.public_repos },
+    { label: '關注數', value: user.followers },
+    { label: '關注的用戶數', value: user.following },
+    { label: '總星數', value: '1+' }, // 這將從所有存儲庫中計算
   ]
-  
+
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
       {stats.map((stat) => (
@@ -63,229 +34,323 @@ async function GitHubStats() {
   )
 }
 
-async function GitHubRepositories() {
-  const repos = await getGitHubRepos()
+function RepositoryCard({ repo }: { repo: GitHubRepo }) {
+
+  return (
+    <Card hover className="group h-full flex flex-col">
+      <CardHeader className="flex-1">
+        <div className="flex items-center justify-between mb-2">
+          <CardTitle className="text-lg group-hover:text-accent transition-colors duration-200 truncate">
+            {repo.name}
+          </CardTitle>
+          <div className="flex items-center gap-3 text-sm text-foreground-muted flex-shrink-0">
+            <div className="flex items-center gap-1">
+              <Star className="h-4 w-4" />
+              <span>{repo.stargazers_count}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <GitFork className="h-4 w-4" />
+              <span>{repo.forks_count}</span>
+            </div>
+          </div>
+        </div>
+
+        <CardDescription className="line-clamp-3">
+          {repo.description || '暫無描述'}
+        </CardDescription>
+
+        <div className="flex items-center gap-2 text-sm text-foreground-muted mt-2">
+          <Calendar className="h-4 w-4" />
+          <span>Updated {formatDate(repo.updated_at)}</span>
+        </div>
+      </CardHeader>
+
+      <CardContent>
+        <div className="flex items-center justify-between mb-4">
+          {repo.language && (
+            <span className="px-3 py-1 text-xs rounded-full text-accent" style={{ backgroundColor: 'var(--glass-bg)' }}>
+              {repo.language}
+            </span>
+          )}
+
+          <div className="flex gap-2">
+            <Button asChild variant="ghost" size="sm">
+               <Link href={`/projects/${repo.owner.login}/${repo.name}`}>
+                 <FileText className="h-4 w-4 mr-1" />
+                 README
+               </Link>
+             </Button>
+            
+            <Button asChild variant="ghost" size="sm">
+              <Link href={repo.html_url} target="_blank" rel="noopener noreferrer">
+                <Github className="h-4 w-4" />
+              </Link>
+            </Button>
+
+            {repo.homepage && (
+              <Button asChild variant="ghost" size="sm">
+                <Link href={repo.homepage} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4" />
+                </Link>
+              </Button>
+            )}
+          </div>
+        </div>
+
+        {repo.topics && repo.topics.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-4">
+            {repo.topics.slice(0, 3).map((topic) => (
+              <span
+                key={topic}
+                className="px-2 py-1 text-xs rounded text-foreground-muted"
+                style={{ backgroundColor: 'var(--glass-bg)' }}
+              >
+                {topic}
+              </span>
+            ))}
+            {repo.topics.length > 3 && (
+              <span className="px-2 py-1 text-xs rounded text-foreground-muted" style={{ backgroundColor: 'var(--glass-bg)' }}>
+                +{repo.topics.length - 3}
+              </span>
+            )}
+          </div>
+        )}
+
+
+      </CardContent>
+    </Card>
+  )
+}
+
+function GitHubRepositories({ repos }: { repos: GitHubRepo[] }) {
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 6
+  const totalPages = Math.ceil(repos.length / itemsPerPage)
+  
+  // Calculate current page items
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const currentRepos = repos.slice(startIndex, endIndex)
+  
+  // Reset to page 1 when repos change
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [repos.length])
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {repos.map((repo) => (
-        <Card key={repo.id} hover className="group h-full flex flex-col">
-          <CardHeader className="flex-1">
-            <div className="flex items-center justify-between mb-2">
-              <CardTitle className="text-lg group-hover:text-accent transition-colors duration-200 truncate">
-                {repo.name}
-              </CardTitle>
-              <div className="flex items-center gap-3 text-sm text-foreground-muted flex-shrink-0">
-                <div className="flex items-center gap-1">
-                  <Star className="h-4 w-4" />
-                  <span>{repo.stargazers_count}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <GitFork className="h-4 w-4" />
-                  <span>{repo.forks_count}</span>
-                </div>
-              </div>
-            </div>
-            
-            <CardDescription className="line-clamp-3">
-              {repo.description || 'No description available'}
-            </CardDescription>
-            
-            <div className="flex items-center gap-2 text-sm text-foreground-muted mt-2">
-              <Calendar className="h-4 w-4" />
-              <span>Updated {formatDate(repo.updated_at)}</span>
-            </div>
-          </CardHeader>
-          
-          <CardContent>
-            <div className="flex items-center justify-between mb-4">
-              {repo.language && (
-                <span className="px-3 py-1 text-xs rounded-full text-accent" style={{ backgroundColor: 'var(--glass-bg)' }}>
-                  {repo.language}
-                </span>
-              )}
-              
-              <div className="flex gap-2">
-                <Button asChild variant="ghost" size="sm">
-                  <Link href={repo.html_url} target="_blank" rel="noopener noreferrer">
-                    <Github className="h-4 w-4" />
-                  </Link>
-                </Button>
-                
-                {repo.homepage && (
-                  <Button asChild variant="ghost" size="sm">
-                    <Link href={repo.homepage} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                )}
-              </div>
-            </div>
-            
-            {repo.topics && repo.topics.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                {repo.topics.slice(0, 3).map((topic) => (
-                  <span
-                    key={topic}
-                    className="px-2 py-1 text-xs rounded text-foreground-muted"
-                    style={{ backgroundColor: 'var(--glass-bg)' }}
-                  >
-                    {topic}
-                  </span>
-                ))}
-                {repo.topics.length > 3 && (
-                  <span className="px-2 py-1 text-xs rounded text-foreground-muted" style={{ backgroundColor: 'var(--glass-bg)' }}>
-                    +{repo.topics.length - 3}
-                  </span>
-                )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      ))}
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {currentRepos.map((repo) => (
+          <RepositoryCard key={repo.id} repo={repo} />
+        ))}
+      </div>
+      
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          className="mt-8"
+        />
+      )}
     </div>
   )
 }
 
+function PrivateProjectCard({ project }: { project: PrivateProject }) {
+  return (
+    <Card hover className="group h-full flex flex-col">
+      <Link href={`/projects/private/${project.slug}`} className="flex-1 flex flex-col">
+        <CardHeader className="flex-1">
+          <CardTitle className="group-hover:text-accent transition-colors duration-200">
+            {project.title}
+          </CardTitle>
+          <CardDescription className="line-clamp-3">
+            {project.description}
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.technologies.map((tech) => (
+              <span
+                key={tech}
+                className="px-2 py-1 text-xs rounded-full text-accent"
+                style={{ backgroundColor: 'var(--glass-bg)' }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex gap-2">
+            {project.github && (
+              <Button 
+                asChild 
+                variant="ghost" 
+                size="sm" 
+                className="flex-1"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Link href={project.github} target="_blank" rel="noopener noreferrer">
+                  <Github className="h-4 w-4 mr-2" />
+                  Code
+                </Link>
+              </Button>
+            )}
+
+            {project.demo && (
+              <Button 
+                asChild 
+                variant="accent" 
+                size="sm" 
+                className="flex-1"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Link href={project.demo} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Demo
+                </Link>
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Link>
+    </Card>
+  )
+}
+
 export default function ProjectsPage() {
+  const [user, setUser] = useState<any>(null)
+  const [repos, setRepos] = useState<GitHubRepo[]>([])
+  const [privateProjects, setPrivateProjects] = useState<PrivateProject[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true)
+        const [userData, reposData, privateProjectsData] = await Promise.all([
+          getGitHubUser('ShangYi7'),
+          getGitHubRepos(100), // 獲取更多儲存庫
+          getPrivateProjects()
+        ])
+        
+        setUser(userData)
+        setRepos(reposData)
+        setPrivateProjects(privateProjectsData)
+      } catch (err) {
+        setError('無法載入 GitHub 資料，請稍後再試。')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">載入中...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error || !user || !repos) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-400 mb-4">載入失敗</h1>
+          <p className="text-gray-400">{error || '無法載入 GitHub 資料，請稍後再試。'}</p>
+        </div>
+      </div>
+    )
+  }
+
+  // 過濾出所有公開的倉庫
+  const publicRepos = repos
+    .filter(repo => !repo.private)
+    .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+
+  // 獲取精選的私人專案
+  const featuredPrivateProjects = privateProjects.filter(project => project.featured)
+
   return (
     <div className="min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-            My <span className="gradient-text">Projects</span>
+            我的<span className="gradient-text">專案</span>
           </h1>
           <p className="text-xl text-foreground-muted max-w-2xl mx-auto">
-            A collection of projects I&apos;ve built, contributed to, and open-sourced.
-            From web applications to developer tools, here&apos;s what I&apos;ve been working on.
+            我構建、貢獻和開源的專案集合。
+            從網站到開發工具，這裡是我一直在工作的內容。
+            我喜歡分享我的知識和技術，並與其他開發者合作。
           </p>
         </div>
 
         {/* GitHub Stats */}
-        <Suspense fallback={
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-            {[...Array(4)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="p-6 text-center">
-                  <div className="h-8 bg-white/10 rounded mb-2" />
-                  <div className="h-4 bg-white/10 rounded" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        }>
-          <GitHubStats />
-        </Suspense>
+        <GitHubStats user={user} />
 
-        {/* Featured Projects */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8" style={{ color: 'var(--foreground)' }}>Featured Projects</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {featuredProjects.map((project) => (
-              <Card key={project.name} hover className="group h-full flex flex-col">
-                <CardHeader className="flex-1">
-                  <CardTitle className="group-hover:text-accent transition-colors duration-200">
-                    {project.name}
-                  </CardTitle>
-                  <CardDescription className="line-clamp-3">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-                
-                <CardContent>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 text-xs rounded-full text-accent"
-                        style={{ backgroundColor: 'var(--glass-bg)' }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex gap-2">
-                    <Button asChild variant="ghost" size="sm" className="flex-1">
-                      <Link href={project.github} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4 mr-2" />
-                        Code
-                      </Link>
-                    </Button>
-                    
-                    {project.demo && (
-                      <Button asChild variant="accent" size="sm" className="flex-1">
-                        <Link href={project.demo} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          Demo
-                        </Link>
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+        {/* Featured Private Projects */}
+        {featuredPrivateProjects.length > 0 && (
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold mb-8" style={{ color: 'var(--foreground)' }}>精選專案</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {featuredPrivateProjects.map((project) => (
+                 <PrivateProjectCard key={project.slug} project={project} />
+               ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* All GitHub Repositories */}
         <div>
           <div className="flex justify-between items-center mb-8">
             <div>
-              <h2 className="text-3xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>All Repositories</h2>
+              <h2 className="text-3xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>Github 公開儲存庫</h2>
               <p className="text-foreground-muted">
-                Explore all my public repositories on GitHub
+                探索我的所有公開存放庫
               </p>
             </div>
             <Button asChild variant="outline">
               <Link href="https://github.com/ShangYi7" target="_blank" rel="noopener noreferrer">
                 <Github className="h-4 w-4 mr-2" />
-                View on GitHub
+                查看 GitHub
               </Link>
             </Button>
           </div>
-          
-          <Suspense fallback={
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <Card key={i} className="animate-pulse h-48">
-                  <CardHeader>
-                    <div className="h-6 bg-white/10 rounded mb-2" />
-                    <div className="h-4 bg-white/10 rounded" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="h-4 bg-white/10 rounded" />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          }>
-            <GitHubRepositories />
-          </Suspense>
+
+          <GitHubRepositories repos={publicRepos} />
         </div>
 
         {/* Call to Action */}
         <Card className="glass-medium mt-16">
           <CardContent className="p-8 text-center">
             <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
-              Interested in collaborating?
+              對合作感興趣嗎？
             </h3>
             <p className="text-foreground-muted mb-6 max-w-2xl mx-auto">
-              I&apos;m always open to interesting projects and collaborations. 
-              Whether you have an idea for a new project or want to contribute to existing ones, 
-              let&apos;s build something amazing together!
+              我始終對興趣盎然的項目和合作開放。
+              無論您有一個新項目或想為現有項目貢獻，
+              讓我們一起構建一個令人驚豔的項目！
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild variant="accent" size="lg">
                 <Link href="mailto:contact@shangyi7.com">
-                  Get In Touch
+                  聯繫我
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link href="https://github.com/ShangYi7" target="_blank" rel="noopener noreferrer">
                   <Github className="h-5 w-5 mr-2" />
-                  Follow on GitHub
+                  關注 GitHub
                 </Link>
               </Button>
             </div>

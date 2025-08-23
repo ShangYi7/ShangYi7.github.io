@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Github, Twitter, Mail, Heart } from 'lucide-react'
+import { Github, Twitter, Mail, Heart,Instagram } from 'lucide-react'
 
 const socialLinks = [
   {
@@ -8,29 +8,29 @@ const socialLinks = [
     icon: Github,
   },
   {
-    name: 'Twitter',
-    href: 'https://twitter.com/ShangYi7',
-    icon: Twitter,
+    name: 'Instagram',
+    href: 'https://www.instagram.com/shang_yi6/',
+    icon: Instagram,
   },
   {
     name: 'Email',
-    href: 'mailto:contact@shangyi7.com',
+    href: 'mailto:ast102283@gmail.com',
     icon: Mail,
   },
 ]
 
 const footerLinks = [
   {
-    title: 'Navigation',
+    title: '網頁',
     links: [
-      { name: 'Home', href: '/' },
-      { name: 'About', href: '/about' },
-      { name: 'Blog', href: '/blog' },
-      { name: 'Projects', href: '/projects' },
+      { name: '主業', href: '/' },
+      { name: '關於', href: '/about' },
+      { name: '文章', href: '/blog' },
+      { name: '專案', href: '/projects' },
     ],
   },
   {
-    title: 'Resources',
+    title: '資源',
     links: [
       { name: 'RSS Feed', href: '/rss.xml' },
       { name: 'Sitemap', href: '/sitemap.xml' },
@@ -46,13 +46,13 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="text-2xl font-bold gradient-text">
-              ShangYi7
+              Shang Yi
             </Link>
             <p className="mt-4 text-foreground-muted max-w-md">
-              A passionate developer sharing thoughts on technology, programming, and life. 
-              Building the future one line of code at a time.
+              一個熱愛開發的人，分享技術、程式設計和生活的想法。
+              一條一條程式碼構建未來。
             </p>
-            
+
             {/* Social Links */}
             <div className="flex space-x-4 mt-6">
               {socialLinks.map((item) => {
@@ -98,16 +98,16 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-foreground-muted text-sm">
-            © {new Date().getFullYear()} ShangYi7. All rights reserved.
+            © {new Date().getFullYear()} ShangYi. All rights reserved.
           </p>
-          
+
           <div className="flex items-center space-x-1 text-foreground-muted text-sm mt-4 sm:mt-0">
             <span>Made with</span>
             <Heart className="h-4 w-4 text-red-500 animate-pulse" />
             <span>using</span>
-            <Link 
-              href="https://nextjs.org" 
-              target="_blank" 
+            <Link
+              href="https://nextjs.org"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-accent hover:text-accent-light transition-colors duration-200"
             >

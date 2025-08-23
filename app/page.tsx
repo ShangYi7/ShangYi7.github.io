@@ -1,3 +1,4 @@
+// 首頁
 import { Suspense } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Github, ExternalLink, Calendar, Clock } from 'lucide-react'
@@ -20,27 +21,27 @@ function HeroSection() {
               </span>
             </h1>
             <p className="text-xl sm:text-2xl text-foreground-muted mb-8 max-w-3xl mx-auto leading-relaxed">
-              我是 ShangYi7，一名熱愛創新的全端開發者
+              我是 ShangYi7,一名熱愛創新的開發者
             </p>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up">
             <Button asChild variant="accent" size="lg">
               <Link href="/about">
-                Learn More About Me
+                了解有關我的更多信息
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            
+
             <Button asChild variant="outline" size="lg">
               <Link href="/blog">
-                Read My Blog
+                閱讀我的文章
               </Link>
             </Button>
           </div>
         </div>
       </div>
-      
+
       {/* Floating elements */}
       <div className="absolute top-20 left-10 w-20 h-20 bg-accent/20 rounded-full blur-xl animate-float" />
       <div className="absolute bottom-20 right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }} />
@@ -50,23 +51,23 @@ function HeroSection() {
 
 async function LatestPosts() {
   const posts = await getLatestPosts(3)
-  
+
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h2 className="text-3xl font-bold text-foreground mb-2">Latest Posts</h2>
-            <p className="text-foreground-muted">Recent thoughts and tutorials</p>
+            <h2 className="text-3xl font-bold text-foreground mb-2">最新文章</h2>
+            <p className="text-foreground-muted">最近的想法和教程</p>
           </div>
           <Button asChild variant="ghost">
             <Link href="/blog">
-              View All Posts
+              查看所有文章
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
             <Card key={post.slug} hover className="group">
@@ -115,45 +116,45 @@ async function GitHubActivity() {
     getGitHubUser(),
     getGitHubRepos()
   ])
-  
+
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h2 className="text-3xl font-bold text-foreground mb-2">GitHub Activity</h2>
-            <p className="text-foreground-muted">Recent projects and contributions</p>
+            <h2 className="text-3xl font-bold text-foreground mb-2">GitHub 活動</h2>
+            <p className="text-foreground-muted">最近的項目和貢獻</p>
           </div>
           <Button asChild variant="ghost">
             <Link href="/projects">
-              View All Projects
+              查看所有項目
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </div>
-        
+
         {/* GitHub Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardContent className="p-6 text-center">
               <div className="text-2xl font-bold text-accent mb-1">{user.public_repos}</div>
-              <div className="text-sm text-foreground-muted">Repositories</div>
+              <div className="text-sm text-foreground-muted">公開倉庫</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6 text-center">
               <div className="text-2xl font-bold text-accent mb-1">{user.followers}</div>
-              <div className="text-sm text-foreground-muted">Followers</div>
+              <div className="text-sm text-foreground-muted">關注數</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6 text-center">
               <div className="text-2xl font-bold text-accent mb-1">{user.following}</div>
-              <div className="text-sm text-foreground-muted">Following</div>
+              <div className="text-sm text-foreground-muted">關注的用戶數</div>
             </CardContent>
           </Card>
         </div>
-        
+
         {/* Recent Repositories */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {repos.slice(0, 4).map((repo) => (
@@ -199,7 +200,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <HeroSection />
-      
+
       <Suspense fallback={
         <div className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -222,7 +223,7 @@ export default function HomePage() {
       }>
         <LatestPosts />
       </Suspense>
-      
+
       <Suspense fallback={
         <div className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

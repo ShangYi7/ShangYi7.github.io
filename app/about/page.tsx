@@ -1,71 +1,94 @@
-import { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Github, Twitter, Mail, MapPin, Calendar, ExternalLink } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+// 關於
+import { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  Github,
+  Twitter,
+  Mail,
+  MapPin,
+  Calendar,
+  ExternalLink,
+  Instagram,
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
-  title: 'About',
-  description: 'Learn more about ShangYi7 - A passionate developer crafting digital experiences.',
-}
+  title: "關於",
+  description: "了解有關Shangyi7的更多信息 - 一位熱情的開發人員製作數字體驗.",
+};
 
 const skills = [
   {
-    category: 'Frontend',
-    technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Vue.js', 'Nuxt.js']
+    category: "前端",
+    technologies: ["JavaScript", "TypeScript", "HTML", "CSS", "Vue.js"],
   },
   {
-    category: 'Backend',
-    technologies: ['Node.js', 'Python', 'Express', 'FastAPI', 'PostgreSQL', 'MongoDB']
+    category: "後端",
+    technologies: ["C/C++", "C#", "Python"],
   },
   {
-    category: 'Tools & Others',
-    technologies: ['Git', 'Docker', 'AWS', 'Vercel', 'Figma', 'Linux']
-  }
-]
+    category: "系統程式設計",
+    technologies: ["C/C++", "C#", "Python"],
+  },
+  {
+    category: "硬體 & 嵌入式",
+    technologies: ["Verilog", "Arduino", "CPLD", "FPGA", "ESP"],
+  },
+  {
+    category: "腳本 & 其他語言",
+    technologies: ["Lua", "Visual Basic"],
+  },
+  {
+    category: "工具 & 其他",
+    technologies: ["Markdown", "Git", "VScode", "Visual Studio", "Windows"],
+  },
+];
 
 const experiences = [
   {
-    title: 'Senior Frontend Developer',
-    company: 'Tech Company',
-    period: '2022 - Present',
-    description: 'Leading frontend development for web applications using React and Next.js. Mentoring junior developers and establishing best practices.'
+    title: "全國高級中等學校技藝競賽",
+    company: "鶯歌工商資訊科",
+    period: "2023 - 2024",
+    description:
+      "代表鶯歌工商參加工科技藝競賽數位電子組，主要使用 FPGA 與 Verilog 進行數位電路設計，並結合 ESP 模組與 Visual Basic 開發控制介面。最終榮獲全國第六名，展現完整系統整合與實作能力。",
   },
   {
-    title: 'Full Stack Developer',
-    company: 'Startup Inc.',
-    period: '2020 - 2022',
-    description: 'Built and maintained full-stack applications using modern web technologies. Collaborated with design and product teams to deliver user-centric solutions.'
+    title: "Fivem RP 開發管理",
+    company: "K.X.G",
+    period: "2022/4/24 - 2022/6/23",
+    description:
+      "使用 QBcore 製作的一個伺服器，跟著朋友一起搞雖然資金沒有很充足，但也是和大家創造了許多回憶",
   },
-  {
-    title: 'Junior Developer',
-    company: 'Digital Agency',
-    period: '2019 - 2020',
-    description: 'Started my professional journey developing websites and web applications. Learned the fundamentals of software development and teamwork.'
-  }
-]
+];
 
 const socialLinks = [
   {
-    name: 'GitHub',
-    href: 'https://github.com/ShangYi7',
+    name: "GitHub",
+    href: "https://github.com/ShangYi7",
     icon: Github,
-    description: 'Check out my code and projects'
+    description: "探索我的程式碼與專案作品",
   },
   {
-    name: 'Twitter',
-    href: 'https://twitter.com/ShangYi7',
-    icon: Twitter,
-    description: 'Follow me for tech updates and thoughts'
+    name: "Instagram",
+    href: "https://instagram.com/Shang_Yi6",
+    icon: Instagram,
+    description: "分享日常生活與幕後點滴",
   },
   {
-    name: 'Email',
-    href: 'mailto:contact@shangyi7.com',
+    name: "Email",
+    href: "mailto:ast102283@gmail.com",
     icon: Mail,
-    description: 'Get in touch for collaborations'
-  }
-]
+    description: "歡迎洽談合作，或是單純打聲招呼",
+  },
+];
 
 export default function AboutPage() {
   return (
@@ -81,24 +104,24 @@ export default function AboutPage() {
             </div>
             <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-background animate-pulse" />
           </div>
-          
+
           <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-            About <span className="gradient-text">ShangYi7</span>
+            關於 <span className="gradient-text">ShangYi</span>
           </h1>
-          
+
           <p className="text-xl text-foreground-muted max-w-2xl mx-auto leading-relaxed">
-            A passionate developer with a love for creating beautiful, functional, and user-friendly applications.
-            Always learning, always building, always improving.
+            我是一名熱愛電子與程式開發的創作者，喜歡將靈感轉化為具體的作品。<br />
+            目前就讀於國立高雄科技大學建功校區電子工程系。
           </p>
-          
+
           <div className="flex items-center justify-center gap-4 mt-6 text-foreground-muted">
             <div className="flex items-center gap-1">
               <MapPin className="h-4 w-4" />
-              <span>Taiwan</span>
+              <span>台灣</span>
             </div>
             <div className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
-              <span>Available for work</span>
+              <span>開放合作與工作機會</span>
             </div>
           </div>
         </div>
@@ -106,30 +129,27 @@ export default function AboutPage() {
         {/* Bio Section */}
         <Card className="mb-12">
           <CardHeader>
-            <CardTitle>My Story</CardTitle>
+            <CardTitle>我的故事</CardTitle>
           </CardHeader>
           <CardContent className="prose prose-invert max-w-none">
             <p>
-              Hello! I&apos;m ShangYi7, a passionate developer who loves crafting digital experiences that make a difference. 
-              My journey in technology started several years ago, and I&apos;ve been fascinated by the endless possibilities 
-              that code can bring to life.
+              哈囉！我是
+              ShangYi7，一名熱愛電子與程式開發的創作者，喜歡將想法轉化為有意義的數位體驗。我的科技旅程始於幾年前，從此便對程式帶來的無限可能充滿熱情。
             </p>
             <p>
-              I specialize in modern web development, with a focus on creating performant, accessible, and beautiful 
-              applications. I believe in writing clean, maintainable code and staying up-to-date with the latest 
-              technologies and best practices.
+              我專注於現代網頁開發，致力於打造高效、易用且美觀的應用程式。我注重撰寫乾淨且可維護的程式碼，並持續追蹤最新技術與最佳實踐。
             </p>
             <p>
-              When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source projects, 
-              or sharing my knowledge through blog posts and tutorials. I&apos;m always excited to collaborate on interesting 
-              projects and connect with fellow developers.
+              程式之外，我喜歡探索新技術、參與開源專案，並透過部落格與教學分享知識。我總是期待能與有趣的專案和開發者合作，互相交流與成長。
             </p>
           </CardContent>
         </Card>
 
         {/* Skills Section */}
         <div className="mb-12">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Skills & Technologies</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            技能和技術
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {skills.map((skill) => (
               <Card key={skill.category}>
@@ -142,7 +162,7 @@ export default function AboutPage() {
                       <span
                         key={tech}
                         className="px-3 py-1 text-sm rounded-full text-accent transition-colors duration-200 hover:opacity-80"
-                        style={{ backgroundColor: 'var(--glass-bg)' }}
+                        style={{ backgroundColor: "var(--glass-bg)" }}
                       >
                         {tech}
                       </span>
@@ -156,7 +176,9 @@ export default function AboutPage() {
 
         {/* Experience Section */}
         <div className="mb-12">
-          <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Experience</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
+            經驗
+          </h2>
           <div className="space-y-6">
             {experiences.map((exp, index) => (
               <Card key={index}>
@@ -168,7 +190,10 @@ export default function AboutPage() {
                         {exp.company}
                       </CardDescription>
                     </div>
-                    <span className="text-sm text-foreground-muted px-3 py-1 rounded-full" style={{ backgroundColor: 'var(--glass-bg)' }}>
+                    <span
+                      className="text-sm text-foreground-muted px-3 py-1 rounded-full"
+                      style={{ backgroundColor: "var(--glass-bg)" }}
+                    >
                       {exp.period}
                     </span>
                   </div>
@@ -183,39 +208,49 @@ export default function AboutPage() {
 
         {/* Connect Section */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-white mb-8">Let&apos;s Connect</h2>
+          <h2 className="text-3xl font-bold text-white mb-8">
+            打個招呼
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
             {socialLinks.map((link) => {
-              const Icon = link.icon
+              const Icon = link.icon;
               return (
                 <Card key={link.name} hover className="group">
                   <CardContent className="p-6 text-center">
                     <Icon className="h-8 w-8 mx-auto mb-4 text-accent group-hover:scale-110 transition-transform duration-200" />
-                    <h3 className="font-semibold text-white mb-2">{link.name}</h3>
-                    <p className="text-sm text-foreground-muted mb-4">{link.description}</p>
+                    <h3 className="font-semibold text-white mb-2">
+                      {link.name}
+                    </h3>
+                    <p className="text-sm text-foreground-muted mb-4">
+                      {link.description}
+                    </p>
                     <Button asChild variant="ghost" size="sm">
-                      <Link href={link.href} target="_blank" rel="noopener noreferrer">
+                      <Link
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         Connect
                         <ExternalLink className="ml-2 h-3 w-3" />
                       </Link>
                     </Button>
                   </CardContent>
                 </Card>
-              )
+              );
             })}
           </div>
-          
+
           <Card className="glass-medium">
             <CardContent className="p-8 text-center">
               <h3 className="text-xl font-semibold text-white mb-4">
-                Interested in working together?
+                有興趣一起合作嗎？
               </h3>
               <p className="text-foreground-muted mb-6">
-                I&apos;m always open to discussing new opportunities, interesting projects, or just having a chat about technology.
+                我隨時歡迎討論新的機會、有趣的專案，或是單純聊聊技術相關的話題。
               </p>
               <Button asChild variant="accent" size="lg">
                 <Link href="mailto:contact@shangyi7.com">
-                  Get In Touch
+                  聯絡我
                   <Mail className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -224,5 +259,5 @@ export default function AboutPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -47,6 +47,22 @@ export interface GitHubRepo {
   topics: string[]
   visibility: string
   default_branch: string
+  fork: boolean
+  readme?: string | null
+}
+
+export interface GitHubReadme {
+  name: string
+  path: string
+  sha: string
+  size: number
+  url: string
+  html_url: string
+  git_url: string
+  download_url: string
+  type: string
+  content: string
+  encoding: string
 }
 
 export interface GitHubEvent {
@@ -79,10 +95,16 @@ class GitHubAPIError extends Error {
 
 async function fetchGitHub<T>(endpoint: string): Promise<T> {
   try {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+    
     const response = await fetch(`https://api.github.com${endpoint}`, {
       headers,
       next: { revalidate: 3600 }, // Cache for 1 hour
+      signal: controller.signal,
     })
+    
+    clearTimeout(timeoutId)
 
     if (!response.ok) {
       throw new GitHubAPIError(
@@ -95,6 +117,11 @@ async function fetchGitHub<T>(endpoint: string): Promise<T> {
   } catch (error) {
     if (error instanceof GitHubAPIError) {
       throw error
+    }
+    
+    if (error instanceof Error && error.name === 'AbortError') {
+      console.error('GitHub API request timeout:', endpoint)
+      throw new GitHubAPIError('GitHub API request timeout')
     }
     
     console.error('GitHub API fetch error:', error)
@@ -129,16 +156,31 @@ export async function getGitHubUser(): Promise<GitHubUser> {
   }
 }
 
-export async function getGitHubRepos(limit: number = 30): Promise<GitHubRepo[]> {
+export async function getGitHubRepos(limit: number = 100): Promise<GitHubRepo[]> {
   try {
     const repos = await fetchGitHub<GitHubRepo[]>(
       `/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=${limit}`
     )
     
-    // Filter out forks and sort by stars
+    // Filter out forks except for important ones (like github.io repos) and sort by a combination of stars and recent activity
     return repos
-      .filter(repo => !repo.full_name.includes('/'))
-      .sort((a, b) => b.stargazers_count - a.stargazers_count)
+      .filter(repo => {
+        // Keep non-fork repos
+        if (!repo.fork) return true
+        // Keep github.io repos even if they are forks
+        if (repo.name.includes('.github.io')) return true
+        // Keep forks with significant activity (stars or recent updates)
+        if (repo.stargazers_count > 0 || new Date(repo.updated_at) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)) return true
+        return false
+      })
+      .sort((a, b) => {
+        // Primary sort: by stars (descending)
+        const starDiff = b.stargazers_count - a.stargazers_count
+        if (starDiff !== 0) return starDiff
+        
+        // Secondary sort: by update time (most recent first)
+        return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      })
   } catch (error) {
     console.error('Error fetching GitHub repos:', error)
     // Return fallback data
@@ -161,6 +203,7 @@ export async function getGitHubRepos(limit: number = 30): Promise<GitHubRepo[]> 
         topics: ['nextjs', 'typescript', 'tailwindcss', 'blog'],
         visibility: 'public',
         default_branch: 'main',
+        fork: false,
       },
       {
         id: 2,
@@ -180,6 +223,7 @@ export async function getGitHubRepos(limit: number = 30): Promise<GitHubRepo[]> 
         topics: ['react', 'components', 'ui'],
         visibility: 'public',
         default_branch: 'main',
+        fork: false,
       },
     ]
   }
@@ -251,5 +295,53 @@ export async function getTotalStars(): Promise<number> {
   } catch (error) {
     console.error('Error calculating total stars:', error)
     return 0
+  }
+}
+
+export async function getRepoReadme(owner: string, repo: string): Promise<string | null> {
+  try {
+    const readme = await fetchGitHub<GitHubReadme>(`/repos/${owner}/${repo}/readme`)
+    
+    if (readme.encoding === 'base64') {
+      // 使用正確的方法解碼 UTF-8 編碼的 base64 內容
+      const base64Content = readme.content.replace(/\s/g, '')
+      
+      // 在 Node.js 環境中使用 Buffer，在瀏覽器環境中使用 TextDecoder
+      if (typeof Buffer !== 'undefined') {
+        // Node.js 環境（伺服器端）
+        return Buffer.from(base64Content, 'base64').toString('utf-8')
+      } else {
+        // 瀏覽器環境（客戶端）
+        try {
+          const binaryString = atob(base64Content)
+          const bytes = new Uint8Array(binaryString.length)
+          for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i)
+          }
+          return new TextDecoder('utf-8').decode(bytes)
+        } catch (decodeError) {
+          console.error('Error decoding base64 content:', decodeError)
+          // 降級處理：嘗試直接使用 atob
+          return atob(base64Content)
+        }
+      }
+    }
+    
+    return readme.content
+  } catch (error) {
+    console.error(`Error fetching README for ${owner}/${repo}:`, error)
+    return null
+  }
+}
+
+export async function getGitHubReposWithReadme(limit: number = 100): Promise<GitHubRepo[]> {
+  try {
+    const repos = await getGitHubRepos(limit)
+    
+    // For performance, we'll load README on demand rather than fetching all at once
+    return repos.map(repo => ({ ...repo, readme: null }))
+  } catch (error) {
+    console.error('Error fetching GitHub repos with README:', error)
+    return []
   }
 }

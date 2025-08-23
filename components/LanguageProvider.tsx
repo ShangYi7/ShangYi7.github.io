@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { translationCache } from '@/lib/translationCache';
+import { clientTranslationService, normalizeLanguageCode } from '@/lib/clientTranslation';
 
 // 支援的語言類型
 export type Language = 'zh' | 'en';
@@ -74,25 +75,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setIsTranslating(true);
 
     try {
-      // 呼叫翻譯 API
-      const response = await fetch('/api/translate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: text,
-          source: 'zh',
-          target: target,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Translation API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const translatedText = data.translatedText || text;
+      // 使用客戶端翻譯服務
+      const sourceLang = normalizeLanguageCode('zh');
+      const targetLangCode = normalizeLanguageCode(target);
+      
+      const result = await clientTranslationService.translate(
+        text, 
+        sourceLang, 
+        targetLangCode
+      );
+      
+      const translatedText = result.translatedText || text;
 
       // 儲存到快取
       translationCache.set(text, translatedText, target);

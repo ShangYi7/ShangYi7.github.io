@@ -8,6 +8,7 @@
 - 📱 **響應式設計** - 完美適配各種設備尺寸
 - 🌐 **多語言支持** - 中英文切換，智能翻譯，本地緩存
 - 📝 **MDX 部落格系統** - 支援 Markdown 和 React 組件
+- ✍️ **文章創建** - 簡單的 MDX 文章創建流程
 - 🔍 **搜尋和篩選** - 文章搜尋、分類和標籤篩選
 - 🚀 **性能優化** - 代碼分割、圖片懶載入、SEO 優化
 - 📊 **GitHub 整合** - 自動展示 GitHub 專案和活動
@@ -198,6 +199,114 @@ import { TranslatedMDX } from '@/components/TranslatedText'
 <TranslatedText text="TypeScript" skipTranslation={true} />
 <TranslatedText text="Next.js" skipTranslation={true} />
 ```
+
+## ✍️ 如何創建 Blog 文章
+
+### 文章格式
+
+本網站使用 **MDX 格式**（Markdown + JSX），文章需要包含：
+- **Frontmatter**：文章的元數據（標題、日期、分類等）
+- **內容**：使用 Markdown 語法撰寫的文章內容
+
+### 創建新文章步驟
+
+#### 1. 在 `content/posts` 目錄創建新的 `.mdx` 文件
+
+文件名格式：`your-article-title.mdx`（建議使用英文和連字符）
+
+#### 2. 添加 Frontmatter
+
+在文件開頭添加以下格式的 frontmatter：
+
+```yaml
+---
+title: "您的文章標題"
+date: "2024-01-20"
+categories: ["技術", "開發"]
+tags: ["Next.js", "React", "TypeScript"]
+summary: "文章摘要，會顯示在文章列表中"
+draft: false
+author: "作者名稱"（可選）
+image: "/images/article-cover.jpg"（可選）
+---
+```
+
+#### 3. 撰寫文章內容
+
+在 frontmatter 後使用 Markdown 語法撰寫內容：
+
+```markdown
+# 文章標題
+
+這是文章的開頭段落...
+
+## 章節標題
+
+### 子章節
+
+- 列表項目 1
+- 列表項目 2
+
+```javascript
+// 程式碼範例
+const example = "Hello World"
+```
+
+### Frontmatter 欄位說明
+
+- **title**：文章標題（必填）
+- **date**：發布日期，格式："YYYY-MM-DD"（必填）
+- **categories**：文章分類陣列（必填）
+- **tags**：標籤陣列（必填）
+- **summary**：文章摘要（必填）
+- **draft**：是否為草稿，設為 `true` 則不會顯示（可選，預設 false）
+- **author**：作者名稱（可選）
+- **image**：封面圖片路徑（可選）
+
+### 範例文章結構
+
+```mdx
+---
+title: "我的第一篇技術文章"
+date: "2024-01-20"
+categories: ["技術", "學習"]
+tags: ["JavaScript", "前端開發"]
+summary: "分享我在前端開發中學到的經驗和技巧"
+draft: false
+---
+
+# 我的第一篇技術文章
+
+歡迎來到我的技術 blog！在這篇文章中，我將分享...
+
+## 主要內容
+
+### 技術要點
+
+1. 重點一
+2. 重點二
+3. 重點三
+
+```javascript
+const greeting = "Hello, World!"
+console.log(greeting)
+```
+
+## 總結
+
+這篇文章介紹了...
+```
+
+### 文章自動處理
+
+系統會自動：
+- 計算閱讀時間
+- 將 Markdown 轉換為 HTML
+- 按日期排序文章
+- 過濾草稿文章
+- 生成分類和標籤索引
+
+創建完成後，文章會自動出現在您的 blog 頁面中，並可透過分類和標籤進行篩選。
 
 ### 翻譯緩存
 

@@ -13,6 +13,7 @@ const navigation = [
   { name: 'About', href: '/about' },     // 關於頁面
   { name: 'Blog', href: '/blog' },       // 博客頁面
   { name: 'Projects', href: '/projects' }, // 項目頁面
+  { name: 'Status', href: '/status' },   // 狀態頁面
 ]
 
 /**

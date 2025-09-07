@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { debounce } from '@/lib/utils'
+import { TranslatedText, TranslatedContainer } from '@/components/TranslatedText'
 
 interface SearchAndFilterProps {
   categories: string[]
@@ -106,119 +107,129 @@ export function SearchAndFilter({
   return (
     <Card className="p-6 mb-8">
       {/* Search Input */}
-      <div className="mb-6">
-        <Input
-          type="search"
-          placeholder="搜索文章..."
-          value={searchQuery}
-          onChange={(e) => handleSearchChange(e.target.value)}
-          className="w-full"
-        />
-      </div>
+      <TranslatedContainer>
+        <div className="mb-6">
+          <Input
+            type="search"
+            placeholder="搜索文章..."
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            className="w-full"
+          />
+        </div>
+      </TranslatedContainer>
 
       {/* Filter Toggle Button (Mobile) */}
-      <div className="md:hidden mb-4">
-        <Button
-          variant="outline"
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full justify-between"
-        >
-          <span>篩選選項</span>
-          <svg
-            className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+      <TranslatedContainer>
+        <div className="md:hidden mb-4">
+          <Button
+            variant="outline"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="w-full justify-between"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </Button>
-      </div>
+            <TranslatedText as="span">篩選選項</TranslatedText>
+            <svg
+              className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </Button>
+        </div>
+      </TranslatedContainer>
 
       {/* Filters */}
       <div className={`space-y-6 ${isExpanded ? 'block' : 'hidden md:block'}`}>
         {/* Categories */}
         {categories.length > 0 && (
-          <div>
-            <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--foreground-muted)' }}>分類</h3>
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => handleCategoryChange(category)}
-                  className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                    selectedCategory === category
-                      ? 'bg-accent-500'
-                      : 'hover:opacity-80'
-                  }`}
-                  style={{
-                    backgroundColor: selectedCategory === category ? 'var(--accent)' : 'var(--glass-bg)',
-                    color: selectedCategory === category ? '#ffffff' : 'var(--foreground-muted)'
-                  }}
-                >
-                  {category}
-                </button>
-              ))}
+          <TranslatedContainer>
+            <div>
+              <TranslatedText as="h3" className="text-sm font-medium mb-3" style={{ color: 'var(--foreground-muted)' }}>分類</TranslatedText>
+              <div className="flex flex-wrap gap-2">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => handleCategoryChange(category)}
+                    className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                      selectedCategory === category
+                        ? 'bg-accent-500'
+                        : 'hover:opacity-80'
+                    }`}
+                    style={{
+                      backgroundColor: selectedCategory === category ? 'var(--accent)' : 'var(--glass-bg)',
+                      color: selectedCategory === category ? '#ffffff' : 'var(--foreground-muted)'
+                    }}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          </TranslatedContainer>
         )}
 
         {/* Tags */}
         {tags.length > 0 && (
-          <div>
-            <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--foreground-muted)' }}>標籤</h3>
-            <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
-              {tags.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => handleTagChange(tag)}
-                  className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                    selectedTag === tag
-                      ? 'bg-accent-500'
-                      : 'hover:opacity-80'
-                  }`}
-                  style={{
-                    backgroundColor: selectedTag === tag ? 'var(--accent)' : 'var(--glass-bg)',
-                    color: selectedTag === tag ? '#ffffff' : 'var(--foreground-muted)'
-                  }}
-                >
-                  #{tag}
-                </button>
-              ))}
+          <TranslatedContainer>
+            <div>
+              <TranslatedText as="h3" className="text-sm font-medium mb-3" style={{ color: 'var(--foreground-muted)' }}>標籤</TranslatedText>
+              <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
+                {tags.map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => handleTagChange(tag)}
+                    className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                      selectedTag === tag
+                        ? 'bg-accent-500'
+                        : 'hover:opacity-80'
+                    }`}
+                    style={{
+                      backgroundColor: selectedTag === tag ? 'var(--accent)' : 'var(--glass-bg)',
+                      color: selectedTag === tag ? '#ffffff' : 'var(--foreground-muted)'
+                    }}
+                  >
+                    #{tag}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          </TranslatedContainer>
         )}
 
         {/* Active Filters & Clear Button */}
         {hasActiveFilters && (
-          <div className="flex items-center justify-between pt-4 border-t border-white/10">
-            <div className="flex flex-wrap gap-2">
-              {searchQuery && (
-                <span className="px-3 py-1 bg-accent-500/20 text-accent-400 rounded-full text-sm">
-                  搜尋: &quot;{searchQuery}&quot;
-                </span>
-              )}
-              {selectedCategory && (
-                <span className="px-3 py-1 bg-accent-500/20 text-accent-400 rounded-full text-sm">
-                  分類: {selectedCategory}
-                </span>
-              )}
-              {selectedTag && (
-                <span className="px-3 py-1 bg-accent-500/20 text-accent-400 rounded-full text-sm">
-                  標籤: #{selectedTag}
-                </span>
-              )}
+          <TranslatedContainer>
+            <div className="flex items-center justify-between pt-4 border-t border-white/10">
+              <div className="flex flex-wrap gap-2">
+                {searchQuery && (
+                  <span className="px-3 py-1 bg-accent-500/20 text-accent-400 rounded-full text-sm">
+                    <TranslatedText>搜尋</TranslatedText>: &quot;{searchQuery}&quot;
+                  </span>
+                )}
+                {selectedCategory && (
+                  <span className="px-3 py-1 bg-accent-500/20 text-accent-400 rounded-full text-sm">
+                    <TranslatedText>分類</TranslatedText>: {selectedCategory}
+                  </span>
+                )}
+                {selectedTag && (
+                  <span className="px-3 py-1 bg-accent-500/20 text-accent-400 rounded-full text-sm">
+                    <TranslatedText>標籤</TranslatedText>: #{selectedTag}
+                  </span>
+                )}
+              </div>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="text-gray-400 hover:text-white"
+              >
+                <TranslatedText>清除篩選</TranslatedText>
+              </Button>
             </div>
-            
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearFilters}
-              className="text-gray-400 hover:text-white"
-            >
-              清除篩選
-            </Button>
-          </div>
+          </TranslatedContainer>
         )}
       </div>
     </Card>

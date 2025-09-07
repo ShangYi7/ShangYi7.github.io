@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { Post } from '@/lib/posts'
 import { SearchAndFilter } from './SearchAndFilter'
 import { PostList } from './PostList'
+// 导入翻译组件
+import { TranslatedText, TranslatedContainer } from '@/components/TranslatedText'
 
 interface BlogClientProps {
   initialPosts: Post[]
@@ -79,14 +81,16 @@ export function BlogClient({ initialPosts, categories, tags }: BlogClientProps) 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           {/* Page header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
-              技術文章
-            </h1>
-            <p className="text-lg" style={{ color: 'var(--foreground-muted)' }}>
-              分享開發經驗與技術心得
-            </p>
-          </div>
+          <TranslatedContainer>
+            <div className="text-center mb-12">
+              <TranslatedText as="h1" className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
+                技術文章
+              </TranslatedText>
+              <TranslatedText as="p" className="text-lg" style={{ color: 'var(--foreground-muted)' }}>
+                分享開發經驗與技術心得
+              </TranslatedText>
+            </div>
+          </TranslatedContainer>
 
           {/* Search and filters */}
           <SearchAndFilter

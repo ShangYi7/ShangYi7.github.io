@@ -10,6 +10,7 @@ interface TranslatedTextProps {
   as?: keyof JSX.IntrinsicElements;
   fallback?: React.ReactNode;
   skipTranslation?: boolean;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -21,7 +22,8 @@ export function TranslatedText({
   className = '', 
   as: Component = 'span',
   fallback,
-  skipTranslation = false
+  skipTranslation = false,
+  style
 }: TranslatedTextProps) {
   const { language, translate, isTranslating } = useLanguage();
   const [translatedContent, setTranslatedContent] = useState<string>('');
@@ -78,7 +80,7 @@ export function TranslatedText({
   // 如果正在翻譯且沒有快取內容，顯示載入狀態
   if (isLoading && !translatedContent) {
     return (
-      <Component className={`${className} opacity-70`}>
+      <Component className={`${className} opacity-70`} style={style}>
         {fallback || (
           <motion.span
             animate={{ opacity: [0.5, 1, 0.5] }}
@@ -92,7 +94,7 @@ export function TranslatedText({
   }
 
   return (
-    <Component className={className}>
+    <Component className={className} style={style}>
       <AnimatePresence mode="wait">
         <motion.span
           key={`${language}-${originalText}`}

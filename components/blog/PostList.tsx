@@ -6,6 +6,7 @@ import { Post } from '@/lib/posts'
 import { formatDate } from '@/lib/utils'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import { TranslatedText, TranslatedContainer } from '@/components/TranslatedText'
 
 interface PostListProps {
   posts: Post[]
@@ -59,15 +60,17 @@ export function PostList({ posts, postsPerPage = 9 }: PostListProps) {
 
   if (posts.length === 0) {
     return (
-      <div className="text-center py-12">
-        <div className="text-gray-400 mb-4">
-          <svg className="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
+      <TranslatedContainer>
+        <div className="text-center py-12">
+          <div className="text-gray-400 mb-4">
+            <svg className="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <TranslatedText as="h3" className="text-xl font-semibold text-foreground mb-2">沒有找到文章</TranslatedText>
+          <TranslatedText as="p" className="text-gray-400 mb-6">嘗試調整搜尋條件或清除篩選器</TranslatedText>
         </div>
-        <h3 className="text-xl font-semibold text-foreground mb-2">沒有找到文章</h3>
-        <p className="text-gray-400 mb-6">嘗試調整搜尋條件或清除篩選器</p>
-      </div>
+      </TranslatedContainer>
     )
   }
 
@@ -85,7 +88,7 @@ export function PostList({ posts, postsPerPage = 9 }: PostListProps) {
                 <time dateTime={post.date}>
                   {formatDate(post.date)}
                 </time>
-                <span>{post.readingTime} 分鐘</span>
+                <span>{post.readingTime} <TranslatedText>分鐘</TranslatedText></span>
               </div>
               
               <CardTitle className="text-xl group-hover:text-accent-400 transition-colors line-clamp-2 mb-3">
@@ -159,7 +162,7 @@ export function PostList({ posts, postsPerPage = 9 }: PostListProps) {
             <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            上一頁
+            <TranslatedText>上一頁</TranslatedText>
           </Button>
 
           {/* Page numbers */}
@@ -195,7 +198,7 @@ export function PostList({ posts, postsPerPage = 9 }: PostListProps) {
             disabled={currentPage === totalPages}
             className="disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            下一頁
+            <TranslatedText>下一頁</TranslatedText>
             <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

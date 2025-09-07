@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { getLatestPosts } from '@/lib/posts'
 import { getGitHubRepos, getGitHubUser } from '@/lib/github'
 import { formatDate, calculateReadingTime } from '@/lib/utils'
+import { TranslatedText, TranslatedContainer } from '@/components/TranslatedText'
 
 function HeroSection() {
   return (
@@ -21,24 +22,26 @@ function HeroSection() {
               </span>
             </h1>
             <p className="text-xl sm:text-2xl text-foreground-muted mb-8 max-w-3xl mx-auto leading-relaxed">
-              我是 ShangYi7,一名熱愛創新的開發者
+              <TranslatedText>我是 ShangYi7,一名熱愛創新的開發者</TranslatedText>
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up">
-            <Button asChild variant="accent" size="lg">
-              <Link href="/about">
-                了解有關我的更多信息
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
+          <TranslatedContainer>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up">
+              <Button asChild variant="accent" size="lg">
+                <Link href="/about">
+                  <TranslatedText>了解有關我的更多信息</TranslatedText>
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
 
-            <Button asChild variant="outline" size="lg">
-              <Link href="/blog">
-                閱讀我的文章
-              </Link>
-            </Button>
-          </div>
+              <Button asChild variant="outline" size="lg">
+                <Link href="/blog">
+                  <TranslatedText>閱讀我的文章</TranslatedText>
+                </Link>
+              </Button>
+            </div>
+          </TranslatedContainer>
         </div>
       </div>
 
@@ -56,16 +59,18 @@ async function LatestPosts() {
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
-          <div>
-            <h2 className="text-3xl font-bold text-foreground mb-2">最新文章</h2>
-            <p className="text-foreground-muted">最近的想法和教程</p>
-          </div>
-          <Button asChild variant="ghost">
-            <Link href="/blog">
-              查看所有文章
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+          <TranslatedContainer>
+            <div>
+              <h2 className="text-3xl font-bold text-foreground mb-2"><TranslatedText>最新文章</TranslatedText></h2>
+              <p className="text-foreground-muted"><TranslatedText>最近的想法和教程</TranslatedText></p>
+            </div>
+            <Button asChild variant="ghost">
+              <Link href="/blog">
+                <TranslatedText>查看所有文章</TranslatedText>
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </TranslatedContainer>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -121,16 +126,18 @@ async function GitHubActivity() {
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
-          <div>
-            <h2 className="text-3xl font-bold text-foreground mb-2">GitHub 活動</h2>
-            <p className="text-foreground-muted">最近的項目和貢獻</p>
-          </div>
-          <Button asChild variant="ghost">
-            <Link href="/projects">
-              查看所有項目
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+          <TranslatedContainer>
+            <div>
+              <h2 className="text-3xl font-bold text-foreground mb-2"><TranslatedText>GitHub 活動</TranslatedText></h2>
+              <p className="text-foreground-muted"><TranslatedText>最近的項目和貢獻</TranslatedText></p>
+            </div>
+            <Button asChild variant="ghost">
+              <Link href="/projects">
+                <TranslatedText>查看所有項目</TranslatedText>
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </TranslatedContainer>
         </div>
 
         {/* GitHub Stats */}
@@ -138,19 +145,19 @@ async function GitHubActivity() {
           <Card>
             <CardContent className="p-6 text-center">
               <div className="text-2xl font-bold text-accent mb-1">{user.public_repos}</div>
-              <div className="text-sm text-foreground-muted">公開倉庫</div>
+              <div className="text-sm text-foreground-muted"><TranslatedText>公開倉庫</TranslatedText></div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6 text-center">
               <div className="text-2xl font-bold text-accent mb-1">{user.followers}</div>
-              <div className="text-sm text-foreground-muted">關注數</div>
+              <div className="text-sm text-foreground-muted"><TranslatedText>關注數</TranslatedText></div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6 text-center">
               <div className="text-2xl font-bold text-accent mb-1">{user.following}</div>
-              <div className="text-sm text-foreground-muted">關注的用戶數</div>
+              <div className="text-sm text-foreground-muted"><TranslatedText>關注的用戶數</TranslatedText></div>
             </CardContent>
           </Card>
         </div>

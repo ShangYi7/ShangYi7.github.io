@@ -48,6 +48,13 @@ export interface GitHubRepo {
   visibility: string
   default_branch: string
   fork: boolean
+  private: boolean
+  owner: {
+    login: string
+    id: number
+    avatar_url: string
+    html_url: string
+  }
   readme?: string | null
 }
 
@@ -97,13 +104,13 @@ async function fetchGitHub<T>(endpoint: string): Promise<T> {
   try {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
-    
+
     const response = await fetch(`https://api.github.com${endpoint}`, {
       headers,
       next: { revalidate: 3600 }, // Cache for 1 hour
       signal: controller.signal,
     })
-    
+
     clearTimeout(timeoutId)
 
     if (!response.ok) {
@@ -118,12 +125,12 @@ async function fetchGitHub<T>(endpoint: string): Promise<T> {
     if (error instanceof GitHubAPIError) {
       throw error
     }
-    
+
     if (error instanceof Error && error.name === 'AbortError') {
       console.error('GitHub API request timeout:', endpoint)
       throw new GitHubAPIError('GitHub API request timeout')
     }
-    
+
     console.error('GitHub API fetch error:', error)
     throw new GitHubAPIError('Failed to fetch from GitHub API')
   }
@@ -161,7 +168,7 @@ export async function getGitHubRepos(limit: number = 100): Promise<GitHubRepo[]>
     const repos = await fetchGitHub<GitHubRepo[]>(
       `/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=${limit}`
     )
-    
+
     // Filter out forks except for important ones (like github.io repos) and sort by a combination of stars and recent activity
     return repos
       .filter(repo => {
@@ -177,7 +184,7 @@ export async function getGitHubRepos(limit: number = 100): Promise<GitHubRepo[]>
         // Primary sort: by stars (descending)
         const starDiff = b.stargazers_count - a.stargazers_count
         if (starDiff !== 0) return starDiff
-        
+
         // Secondary sort: by update time (most recent first)
         return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
       })
@@ -204,6 +211,13 @@ export async function getGitHubRepos(limit: number = 100): Promise<GitHubRepo[]>
         visibility: 'public',
         default_branch: 'main',
         fork: false,
+        private: false,
+        owner: {
+          login: GITHUB_USERNAME,
+          id: 0,
+          avatar_url: '',
+          html_url: `https://github.com/${GITHUB_USERNAME}`,
+        },
       },
       {
         id: 2,
@@ -224,6 +238,13 @@ export async function getGitHubRepos(limit: number = 100): Promise<GitHubRepo[]>
         visibility: 'public',
         default_branch: 'main',
         fork: false,
+        private: false,
+        owner: {
+          login: GITHUB_USERNAME,
+          id: 0,
+          avatar_url: '',
+          html_url: `https://github.com/${GITHUB_USERNAME}`,
+        },
       },
     ]
   }
@@ -234,10 +255,10 @@ export async function getGitHubEvents(limit: number = 10): Promise<GitHubEvent[]
     const events = await fetchGitHub<GitHubEvent[]>(
       `/users/${GITHUB_USERNAME}/events/public?per_page=${limit}`
     )
-    
+
     // Filter for interesting event types
     const interestingEvents = ['PushEvent', 'CreateEvent', 'ReleaseEvent', 'PublicEvent']
-    
+
     return events.filter(event => interestingEvents.includes(event.type))
   } catch (error) {
     console.error('Error fetching GitHub events:', error)
@@ -301,11 +322,11 @@ export async function getTotalStars(): Promise<number> {
 export async function getRepoReadme(owner: string, repo: string): Promise<string | null> {
   try {
     const readme = await fetchGitHub<GitHubReadme>(`/repos/${owner}/${repo}/readme`)
-    
+
     if (readme.encoding === 'base64') {
       // 使用正確的方法解碼 UTF-8 編碼的 base64 內容
       const base64Content = readme.content.replace(/\s/g, '')
-      
+
       // 在 Node.js 環境中使用 Buffer，在瀏覽器環境中使用 TextDecoder
       if (typeof Buffer !== 'undefined') {
         // Node.js 環境（伺服器端）
@@ -326,7 +347,7 @@ export async function getRepoReadme(owner: string, repo: string): Promise<string
         }
       }
     }
-    
+
     return readme.content
   } catch (error) {
     console.error(`Error fetching README for ${owner}/${repo}:`, error)
@@ -337,7 +358,7 @@ export async function getRepoReadme(owner: string, repo: string): Promise<string
 export async function getGitHubReposWithReadme(limit: number = 100): Promise<GitHubRepo[]> {
   try {
     const repos = await getGitHubRepos(limit)
-    
+
     // For performance, we'll load README on demand rather than fetching all at once
     return repos.map(repo => ({ ...repo, readme: null }))
   } catch (error) {

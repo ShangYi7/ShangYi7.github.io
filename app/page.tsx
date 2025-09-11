@@ -103,7 +103,7 @@ async function LatestPosts() {
                 </div>
                 <Button asChild variant="ghost" className="w-full">
                   <Link href={`/blog/${post.slug}`}>
-                    Read More
+                    <TranslatedText>閱讀更多</TranslatedText>
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -177,7 +177,7 @@ async function GitHubActivity() {
                   </div>
                 </div>
                 <CardDescription>
-                  {repo.description || 'No description available'}
+                  {repo.description || <TranslatedText>暫無描述</TranslatedText>}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -189,7 +189,7 @@ async function GitHubActivity() {
                   )}
                   <Button asChild variant="ghost" size="sm">
                     <Link href={repo.html_url} target="_blank" rel="noopener noreferrer">
-                      View on GitHub
+                      <TranslatedText>在 GitHub 上查看</TranslatedText>
                       <ExternalLink className="ml-2 h-3 w-3" />
                     </Link>
                   </Button>

@@ -166,7 +166,7 @@ export default function AboutPage() {
                           className="px-3 py-1 text-sm rounded-full text-accent transition-colors duration-200 hover:opacity-80"
                           style={{ backgroundColor: "var(--glass-bg)" }}
                         >
-                          {tech}
+                          <TranslatedText>{tech}</TranslatedText>
                         </span>
                       ))}
                     </div>

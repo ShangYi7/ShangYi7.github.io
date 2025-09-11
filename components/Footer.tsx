@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Github, Twitter, Mail, Heart,Instagram } from 'lucide-react'
+import { TranslatedText } from './TranslatedText'
 
 const socialLinks = [
   {
@@ -23,7 +24,7 @@ const footerLinks = [
   {
     title: '網頁',
     links: [
-      { name: '主業', href: '/' },
+      { name: '首頁', href: '/' },
       { name: '關於', href: '/about' },
       { name: '文章', href: '/blog' },
       { name: '專案', href: '/projects' },
@@ -49,8 +50,10 @@ export function Footer() {
               Shang Yi
             </Link>
             <p className="mt-4 text-foreground-muted max-w-md">
-              一個熱愛開發的人，分享技術、程式設計和生活的想法。
-              一條一條程式碼構建未來。
+              <TranslatedText>
+                一個熱愛開發的人，分享技術、程式設計和生活的想法。
+                一條一條程式碼構建未來。
+              </TranslatedText>
             </p>
 
             {/* Social Links */}
@@ -77,7 +80,7 @@ export function Footer() {
           {footerLinks.map((section) => (
             <div key={section.title}>
               <h3 className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: 'var(--foreground)' }}>
-                {section.title}
+                <TranslatedText>{section.title}</TranslatedText>
               </h3>
               <ul className="space-y-3">
                 {section.links.map((link) => (
@@ -86,7 +89,7 @@ export function Footer() {
                       href={link.href}
                       className="text-foreground-muted hover:text-accent transition-colors duration-200"
                     >
-                      {link.name}
+                      <TranslatedText>{link.name}</TranslatedText>
                     </Link>
                   </li>
                 ))}
@@ -98,13 +101,15 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-foreground-muted text-sm">
-            © {new Date().getFullYear()} ShangYi. All rights reserved.
+            <TranslatedText>
+              © {new Date().getFullYear()} ShangYi. All rights reserved.
+            </TranslatedText>
           </p>
 
           <div className="flex items-center space-x-1 text-foreground-muted text-sm mt-4 sm:mt-0">
-            <span>Made with</span>
+            <TranslatedText>Made with</TranslatedText>
             <Heart className="h-4 w-4 text-red-500 animate-pulse" />
-            <span>using</span>
+            <TranslatedText>using</TranslatedText>
             <Link
               href="https://nextjs.org"
               target="_blank"

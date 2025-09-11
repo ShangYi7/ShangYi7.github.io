@@ -162,7 +162,7 @@ export function SearchAndFilter({
                       color: selectedCategory === category ? '#ffffff' : 'var(--foreground-muted)'
                     }}
                   >
-                    {category}
+                    <TranslatedText>{category}</TranslatedText>
                   </button>
                 ))}
               </div>
@@ -190,7 +190,7 @@ export function SearchAndFilter({
                       color: selectedTag === tag ? '#ffffff' : 'var(--foreground-muted)'
                     }}
                   >
-                    #{tag}
+                    <TranslatedText>#{tag}</TranslatedText>
                   </button>
                 ))}
               </div>

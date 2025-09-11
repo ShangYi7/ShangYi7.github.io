@@ -70,7 +70,7 @@ function RepositoryCard({ repo }: { repo: GitHubRepo }) {
         <div className="flex items-center justify-between mb-4">
           {repo.language && (
             <span className="px-3 py-1 text-xs rounded-full text-accent" style={{ backgroundColor: 'var(--glass-bg)' }}>
-              {repo.language}
+              <TranslatedText>{repo.language}</TranslatedText>
             </span>
           )}
 
@@ -106,7 +106,7 @@ function RepositoryCard({ repo }: { repo: GitHubRepo }) {
                 className="px-2 py-1 text-xs rounded text-foreground-muted"
                 style={{ backgroundColor: 'var(--glass-bg)' }}
               >
-                {topic}
+                <TranslatedText>{topic}</TranslatedText>
               </span>
             ))}
             {repo.topics.length > 3 && (

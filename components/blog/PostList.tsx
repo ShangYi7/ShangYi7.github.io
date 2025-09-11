@@ -112,7 +112,7 @@ export function PostList({ posts, postsPerPage = 9 }: PostListProps) {
                       href={`/blog?category=${encodeURIComponent(category)}`}
                       className="px-2 py-1 bg-accent-500/20 text-accent-400 rounded text-xs hover:bg-accent-500/30 transition-colors"
                     >
-                      {category}
+                      <TranslatedText>{category}</TranslatedText>
                     </Link>
                   ))}
                   {post.categories.length > 2 && (
@@ -133,7 +133,7 @@ export function PostList({ posts, postsPerPage = 9 }: PostListProps) {
                       className="px-2 py-1 rounded text-xs transition-colors hover:opacity-80"
                       style={{ backgroundColor: 'var(--glass-bg)', color: 'var(--foreground-muted)' }}
                     >
-                      #{tag}
+                      <TranslatedText>#{tag}</TranslatedText>
                     </Link>
                   ))}
                   {post.tags.length > 4 && (
@@ -171,7 +171,7 @@ export function PostList({ posts, postsPerPage = 9 }: PostListProps) {
               if (page === '...') {
                 return (
                   <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">
-                    ...
+                    <TranslatedText>...</TranslatedText>
                   </span>
                 )
               }

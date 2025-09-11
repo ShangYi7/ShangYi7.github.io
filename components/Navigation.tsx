@@ -5,15 +5,16 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { LanguageToggle, LanguageToggleCompact } from './LanguageToggle'
+import { TranslatedText } from './TranslatedText'
 
 // 導航菜單配置
 // 定義網站的主要導航項目
 const navigation = [
-  { name: 'Home', href: '/' },           // 首頁
-  { name: 'About', href: '/about' },     // 關於頁面
-  { name: 'Blog', href: '/blog' },       // 博客頁面
-  { name: 'Projects', href: '/projects' }, // 項目頁面
-  { name: 'Status', href: '/status' },   // 狀態頁面
+  { name: '首頁', href: '/' },           // 首頁
+  { name: '關於', href: '/about' },     // 關於頁面
+  { name: '文章', href: '/blog' },       // 博客頁面
+  { name: '專案', href: '/projects' }, // 項目頁面
+  { name: '狀態', href: '/status' },   // 狀態頁面
 ]
 
 /**
@@ -72,7 +73,7 @@ export function Navigation() {
                     }
                   }}
                 >
-                  {item.name}
+                  <TranslatedText>{item.name}</TranslatedText>
                 </Link>
               )
             })}
@@ -122,7 +123,7 @@ export function Navigation() {
                       : 'text-foreground-muted hover:text-accent hover:bg-white/5'
                   }`}
                 >
-                  {item.name}
+                  <TranslatedText>{item.name}</TranslatedText>
                 </Link>
               )
             })}

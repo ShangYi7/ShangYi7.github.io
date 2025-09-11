@@ -16,6 +16,7 @@ export interface ServiceStatus {
   lastChecked: string
   responseTime?: number
   subServices?: SubServiceStatus[]
+  url?: string
 }
 
 export interface SubServiceStatus {
@@ -83,7 +84,8 @@ export async function checkServiceStatus(service: ExternalService): Promise<Serv
         status: 'operational',
         description: 'All systems operational',
         lastChecked: new Date().toISOString(),
-        responseTime
+        responseTime,
+        url: service.url
       }
     } else if (response.status >= 500) {
       return {
@@ -91,7 +93,8 @@ export async function checkServiceStatus(service: ExternalService): Promise<Serv
         status: 'outage',
         description: `Server error (${response.status})`,
         lastChecked: new Date().toISOString(),
-        responseTime
+        responseTime,
+        url: service.url
       }
     } else {
       return {
@@ -99,7 +102,8 @@ export async function checkServiceStatus(service: ExternalService): Promise<Serv
         status: 'degraded',
         description: `Service issues (${response.status})`,
         lastChecked: new Date().toISOString(),
-        responseTime
+        responseTime,
+        url: service.url
       }
     }
   } catch (error) {
@@ -111,7 +115,8 @@ export async function checkServiceStatus(service: ExternalService): Promise<Serv
         status: 'outage',
         description: 'Request timeout',
         lastChecked: new Date().toISOString(),
-        responseTime
+        responseTime,
+        url: service.url
       }
     }
     
@@ -120,7 +125,8 @@ export async function checkServiceStatus(service: ExternalService): Promise<Serv
       status: 'outage',
       description: 'Unable to reach service',
       lastChecked: new Date().toISOString(),
-      responseTime
+      responseTime,
+      url: service.url
     }
   }
 }
@@ -136,7 +142,8 @@ export async function checkAllServicesStatus(): Promise<ServiceStatus[]> {
         name: service.name,
         status: 'outage' as const,
         description: 'Status check failed',
-        lastChecked: new Date().toISOString()
+        lastChecked: new Date().toISOString(),
+        url: service.url
       }
     })
   )
@@ -196,7 +203,8 @@ async function getGitHubDetailedStatus(): Promise<ServiceStatus> {
         name: 'GitHub',
         status: mappedStatus,
         description,
-        lastChecked: new Date().toISOString()
+        lastChecked: new Date().toISOString(),
+        url: 'https://github.com'
       }
     }
     
@@ -250,7 +258,8 @@ async function getCfxReDetailedStatus(): Promise<ServiceStatus> {
         status: overallStatus,
         description: data.status?.description || 'All systems operational',
         lastChecked: new Date().toISOString(),
-        subServices
+        subServices,
+        url: 'https://cfx.re'
       }
     } else {
       // 如果狀態 API 不可用，回退到基本檢查
@@ -281,7 +290,8 @@ async function getCfxReDetailedStatus(): Promise<ServiceStatus> {
           status: 'operational',
           description: 'All systems operational',
           lastChecked: new Date().toISOString(),
-          subServices
+          subServices,
+          url: 'https://cfx.re'
         }
       } else {
         return {
@@ -289,7 +299,8 @@ async function getCfxReDetailedStatus(): Promise<ServiceStatus> {
           status: 'degraded',
           description: `Service issues (${fallbackResponse.status})`,
           lastChecked: new Date().toISOString(),
-          subServices: subServices.map(s => ({ ...s, status: 'degraded' as const }))
+          subServices: subServices.map(s => ({ ...s, status: 'degraded' as const })),
+          url: 'https://cfx.re'
         }
       }
     }
@@ -313,7 +324,8 @@ async function getCfxReDetailedStatus(): Promise<ServiceStatus> {
       status: 'outage',
       description: 'Unable to reach service',
       lastChecked: new Date().toISOString(),
-      subServices
+      subServices,
+      url: 'https://cfx.re'
     }
   }
 }

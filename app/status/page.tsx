@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
-import { RefreshCw, Globe } from 'lucide-react'
+import { RefreshCw, Globe, ExternalLink } from 'lucide-react'
 import { TranslatedText, TranslatedContainer } from '@/components/TranslatedText'
+import Link from 'next/link'
 import { getStatusColorClass, getStatusText, formatResponseTime, type ServiceStatus } from '@/lib/external-status'
 
 /**
@@ -126,7 +127,21 @@ export default function StatusPage() {
                   <Card key={index} className="glass border-white/10">
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
-                        <span>{service.name}</span>
+                        <div className="flex items-center gap-2">
+                          {service.url ? (
+                            <Link 
+                              href={service.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-foreground hover:text-primary transition-colors"
+                            >
+                              <span>{service.name}</span>
+                              <ExternalLink className="w-4 h-4" />
+                            </Link>
+                          ) : (
+                            <span>{service.name}</span>
+                          )}
+                        </div>
                         <Badge className={`${getStatusColorClass(service.status)} text-white border-0`}>
                           <TranslatedText>{service.status === 'operational' ? '所有系統運作正常' : getStatusText(service.status)}</TranslatedText>
                         </Badge>

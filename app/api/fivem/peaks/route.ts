@@ -11,10 +11,20 @@ function dateStr(d = new Date()) {
 
 const DAILY_DIR = path.join(process.cwd(), 'data', 'fivem', 'daily-max');
 
-export async function GET(req: NextRequest) {
-  const url = new URL(req.url);
-  const date = url.searchParams.get('date') || dateStr();
-  const id = url.searchParams.get('id'); // 可選：指定伺服器 id
+export const dynamic = 'force-static';
+
+// 預設提供最近日期的資料
+export async function generateStaticParams() {
+  return [
+    { date: dateStr() },
+    { date: dateStr(new Date(Date.now() - 86400000)) }, // 昨天
+  ];
+}
+
+export async function GET(req: NextRequest, { params }: { params: { date?: string, id?: string } }) {
+  // 在靜態輸出模式下，使用預設日期
+  const date = params.date || dateStr();
+  const id = params.id; // 可選：指定伺服器 id
   const file = path.join(DAILY_DIR, `${date}.json`);
   try {
     const raw = await fs.readFile(file, 'utf8');

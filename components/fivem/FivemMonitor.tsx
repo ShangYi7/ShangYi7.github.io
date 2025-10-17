@@ -20,26 +20,57 @@ export default function FivemMonitor() {
   const [loading, setLoading] = useState(false);
 
   const fetchServers = useCallback(async () => {
-    const res = await fetch('/api/fivem/servers');
-    const json = await res.json();
-    const list: ServerConfig[] = json.servers ?? [];
-    setServers(list);
-    // Initialize seriesMap with existing keys
-    setSeriesMap((prev) => {
-      const next = { ...prev };
-      list.forEach((s) => {
-        if (!next[s.id]) next[s.id] = [];
-      });
-      return next;
-    });
+    try {
+      // 先嘗試從 API 獲取數據
+      const res = await fetch('/api/fivem/servers');
+      if (res.ok) {
+        const json = await res.json();
+        const list: ServerConfig[] = json.servers ?? [];
+        if (list.length > 0) {
+          setServers(list);
+          // Initialize seriesMap with existing keys
+          setSeriesMap((prev) => {
+            const next = { ...prev };
+            list.forEach((s) => {
+              if (!next[s.id]) next[s.id] = [];
+            });
+            return next;
+          });
+          return;
+        }
+      }
+
+      // 如果 API 失敗，使用靜態數據
+      const staticRes = await fetch('/data/fivem-static.json');
+      if (staticRes.ok) {
+        const staticData = await staticRes.json();
+        const list: ServerConfig[] = staticData.servers ?? [];
+        setServers(list);
+        // Initialize seriesMap with existing keys
+        setSeriesMap((prev) => {
+          const next = { ...prev };
+          list.forEach((s) => {
+            if (!next[s.id]) next[s.id] = [];
+          });
+          return next;
+        });
+      }
+    } catch (e) {
+      console.error('無法獲取伺服器列表', e);
+    }
   }, []);
 
   const fetchSnapshot = useCallback(async (id: string): Promise<Snapshot | null> => {
     try {
+      // 先嘗試從 API 獲取數據
       const res = await fetch(`/api/fivem/players?id=${encodeURIComponent(id)}`);
-      if (!res.ok) return null;
-      const json = await res.json();
-      return json as Snapshot;
+      if (res.ok) {
+        const json = await res.json();
+        return json as Snapshot;
+      }
+
+      // 如果 API 失敗，返回 null，讓後續使用靜態數據
+      return null;
     } catch (e) {
       return null;
     }
@@ -48,16 +79,34 @@ export default function FivemMonitor() {
   const fetchHistory = useCallback(async () => {
     if (!servers.length) return;
     try {
+      // 先嘗試從 API 獲取數據
       const now = new Date();
       const y = now.getFullYear();
       const m = String(now.getMonth() + 1).padStart(2, '0');
       const d = String(now.getDate()).padStart(2, '0');
       const date = `${y}-${m}-${d}`;
       const res = await fetch(`/api/fivem/logs?date=${date}`);
-      if (!res.ok) return;
-      const json = await res.json();
-      const samples: Array<{ timestamp: string; id: string; name?: string; players?: number }> =
-        Array.isArray(json?.samples) ? json.samples : (Array.isArray(json) ? json : []);
+      let samples: Array<{ timestamp: string; id: string; name?: string; players?: number }> = [];
+
+      if (res.ok) {
+        const json = await res.json();
+        samples = Array.isArray(json?.samples) ? json.samples : (Array.isArray(json) ? json : []);
+      }
+
+      // 如果 API 失敗或返回空數據，嘗試使用靜態數據
+      if (samples.length === 0) {
+        try {
+          const staticRes = await fetch('/data/fivem-static.json');
+          if (staticRes.ok) {
+            const staticData = await staticRes.json();
+            if (Array.isArray(staticData.data)) {
+              samples = staticData.data;
+            }
+          }
+        } catch (e) {
+          console.error('無法獲取靜態歷史數據', e);
+        }
+      }
 
       // 僅保留目前 servers 內的 id
       const validIds = new Set(servers.map((s) => s.id));
@@ -97,7 +146,7 @@ export default function FivemMonitor() {
       setLabels(labelsUniq);
       setSeriesMap(nextMap);
     } catch (e) {
-      // ignore
+      console.error('獲取歷史數據失敗', e);
     }
   }, [servers]);
 
@@ -106,18 +155,63 @@ export default function FivemMonitor() {
     setLoading(true);
     const now = new Date();
     const label = formatTimeLabel(now);
-    const snapshots = await Promise.all(servers.map((s) => fetchSnapshot(s.id)));
-    setLabels((prev) => [...prev, label]);
-    setSeriesMap((prev) => {
-      const next = { ...prev };
-      servers.forEach((s, i) => {
-        const snap = snapshots[i];
-        const v = snap?.players ?? 0;
-        next[s.id] = [...(next[s.id] ?? []), { t: now, v }];
-      });
-      return next;
-    });
-    setLoading(false);
+
+    try {
+      // 嘗試從 API 獲取數據
+      const snapshots = await Promise.all(servers.map((s) => fetchSnapshot(s.id)));
+
+      // 檢查是否所有快照都為空，如果是則使用靜態數據
+      const allNull = snapshots.every(snap => snap === null);
+
+      if (allNull) {
+        // 使用靜態數據
+        try {
+          const staticRes = await fetch('/data/fivem-static.json');
+          if (staticRes.ok) {
+            const staticData = await staticRes.json();
+            if (Array.isArray(staticData.data) && staticData.data.length > 0) {
+              // 使用最新的靜態數據作為當前數據
+              const latestData = new Map();
+              staticData.data.forEach((item: { id: string; timestamp: string; players?: number }) => {
+                if (!latestData.has(item.id) ||
+                    new Date(latestData.get(item.id).timestamp) < new Date(item.timestamp)) {
+                  latestData.set(item.id, item);
+                }
+              });
+
+              setLabels((prev) => [...prev, label]);
+              setSeriesMap((prev) => {
+                const next = { ...prev };
+                servers.forEach((s) => {
+                  const latestItem = latestData.get(s.id);
+                  const v = latestItem?.players ?? 0;
+                  next[s.id] = [...(next[s.id] ?? []), { t: now, v }];
+                });
+                return next;
+              });
+            }
+          }
+        } catch (e) {
+          console.error('無法獲取靜態數據', e);
+        }
+      } else {
+        // 使用 API 數據
+        setLabels((prev) => [...prev, label]);
+        setSeriesMap((prev) => {
+          const next = { ...prev };
+          servers.forEach((s, i) => {
+            const snap = snapshots[i];
+            const v = snap?.players ?? 0;
+            next[s.id] = [...(next[s.id] ?? []), { t: now, v }];
+          });
+          return next;
+        });
+      }
+    } catch (e) {
+      console.error('輪詢數據失敗', e);
+    } finally {
+      setLoading(false);
+    }
   }, [servers, fetchSnapshot]);
 
   const combinedSeries = useMemo(() => {

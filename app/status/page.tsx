@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -23,13 +23,13 @@ export default function StatusPage() {
   const [isClient, setIsClient] = useState(false)
 
   // 獲取所有狀態數據
-  const fetchAllData = async () => {
+  const fetchAllData = useCallback(async () => {
     setIsRefreshing(true)
     setError(null)
     
     try {
       const [externalResult] = await Promise.allSettled([
-        fetch('/api/status/external/').then(res => res.json())
+        fetch('/api/status/external').then(res => res.json())
       ])
       
       // 處理外部服務結果
@@ -47,7 +47,7 @@ export default function StatusPage() {
       setIsRefreshing(false)
       setLoading(false)
     }
-  }
+  }, [])
 
   // 刷新所有狀態
   const refreshAllStatus = () => {
@@ -70,7 +70,7 @@ export default function StatusPage() {
     }, 5 * 60 * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [loading, fetchAllData]);
 
   // 頁面可見性變化時重新獲取數據
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function StatusPage() {
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [loading]);
+  }, [loading, fetchAllData]);
 
   return (
     <TranslatedContainer>

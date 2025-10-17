@@ -20,8 +20,9 @@ export async function GET(req: NextRequest, { params }: { params: { id?: string 
   return NextResponse.json({
     id: id,
     name: "FiveM 伺服器",
-    players: [],
-    timestamp: new Date().toISOString(),
+    players: 25,
+    maxPlayers: 64,
+    lastUpdated: new Date().toISOString(),
     static: true
   });
 }

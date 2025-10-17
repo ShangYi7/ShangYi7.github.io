@@ -11,7 +11,7 @@ export async function generateStaticParams() {
 }
 
 export async function GET(req: NextRequest, { params }: { params: { id?: string } }) {
-  const id = params.id;
+  const id = params?.id;
   if (!id) {
     return NextResponse.json({ error: 'Missing id' }, { status: 400 });
   }

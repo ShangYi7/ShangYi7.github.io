@@ -9,6 +9,7 @@ import { LanguageProvider } from '@/components/LanguageProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://shangyi7.github.io'),
   title: {
     default: 'ShangYi7 - Personal Website & Blog',
     template: '%s | ShangYi7'

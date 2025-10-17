@@ -23,8 +23,8 @@ export async function generateStaticParams() {
 
 export async function GET(req: NextRequest, { params }: { params: { date?: string, id?: string } }) {
   // 在靜態輸出模式下，使用預設日期
-  const date = params.date || dateStr();
-  const id = params.id;
+  const date = params?.date || dateStr();
+  const id = params?.id;
   const file = path.join(LOG_DIR, `${date}.jsonl`);
   try {
     const raw = await fs.readFile(file, 'utf8');

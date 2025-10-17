@@ -41,19 +41,24 @@ export default function FivemMonitor() {
       }
 
       // 如果 API 失敗，使用靜態數據
-      const staticRes = await fetch('/data/fivem-static.json');
-      if (staticRes.ok) {
-        const staticData = await staticRes.json();
-        const list: ServerConfig[] = staticData.servers ?? [];
-        setServers(list);
-        // Initialize seriesMap with existing keys
-        setSeriesMap((prev) => {
-          const next = { ...prev };
-          list.forEach((s) => {
-            if (!next[s.id]) next[s.id] = [];
+      try {
+        // 在 GitHub Pages 上使用相對路徑
+        const staticRes = await fetch('./data/fivem-static.json');
+        if (staticRes.ok) {
+          const staticData = await staticRes.json();
+          const list: ServerConfig[] = staticData.servers ?? [];
+          setServers(list);
+          // Initialize seriesMap with existing keys
+          setSeriesMap((prev) => {
+            const next = { ...prev };
+            list.forEach((s) => {
+              if (!next[s.id]) next[s.id] = [];
+            });
+            return next;
           });
-          return next;
-        });
+        }
+      } catch (e) {
+        console.error('無法獲取伺服器列表', e);
       }
     } catch (e) {
       console.error('無法獲取伺服器列表', e);
@@ -96,7 +101,7 @@ export default function FivemMonitor() {
       // 如果 API 失敗或返回空數據，嘗試使用靜態數據
       if (samples.length === 0) {
         try {
-          const staticRes = await fetch('/data/fivem-static.json');
+          const staticRes = await fetch('./data/fivem-static.json');
           if (staticRes.ok) {
             const staticData = await staticRes.json();
             if (Array.isArray(staticData.data)) {
@@ -166,15 +171,15 @@ export default function FivemMonitor() {
       if (allNull) {
         // 使用靜態數據
         try {
-          const staticRes = await fetch('/data/fivem-static.json');
+          const staticRes = await fetch('./data/fivem-static.json');
           if (staticRes.ok) {
             const staticData = await staticRes.json();
             if (Array.isArray(staticData.data) && staticData.data.length > 0) {
               // 使用最新的靜態數據作為當前數據
               const latestData = new Map();
               staticData.data.forEach((item: { id: string; timestamp: string; players?: number }) => {
-                if (!latestData.has(item.id) ||
-                    new Date(latestData.get(item.id).timestamp) < new Date(item.timestamp)) {
+                if (!latestData.has(item.id) || 
+                    (latestData.get(item.id) && new Date(latestData.get(item.id).timestamp) < new Date(item.timestamp))) {
                   latestData.set(item.id, item);
                 }
               });

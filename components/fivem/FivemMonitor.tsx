@@ -45,6 +45,62 @@ export default function FivemMonitor() {
     }
   }, []);
 
+  const fetchHistory = useCallback(async () => {
+    if (!servers.length) return;
+    try {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      const date = `${y}-${m}-${d}`;
+      const res = await fetch(`/api/fivem/logs?date=${date}`);
+      if (!res.ok) return;
+      const json = await res.json();
+      const samples: Array<{ timestamp: string; id: string; name?: string; players?: number }> =
+        Array.isArray(json?.samples) ? json.samples : (Array.isArray(json) ? json : []);
+
+      // 僅保留目前 servers 內的 id
+      const validIds = new Set(servers.map((s) => s.id));
+      const filtered = samples.filter((s) => s && validIds.has(s.id));
+      filtered.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
+      // 建立唯一時間標籤（到分鐘），並映射索引
+      const labelsUniq: string[] = [];
+      const labelTimes: Date[] = [];
+      const labelIdx = new Map<string, number>();
+      for (const it of filtered) {
+        const dt = new Date(it.timestamp);
+        const label = formatTimeLabel(dt);
+        if (!labelIdx.has(label)) {
+          labelIdx.set(label, labelsUniq.length);
+          labelsUniq.push(label);
+          labelTimes.push(dt);
+        }
+      }
+
+      // 依 labels 長度建立每台伺服器的曲線，預設 0
+      const nextMap: Record<string, { t: Date; v: number }[]> = {};
+      servers.forEach((s) => {
+        nextMap[s.id] = labelsUniq.map((_, i) => ({ t: labelTimes[i], v: 0 }));
+      });
+
+      // 將樣本填入對應索引
+      for (const it of filtered) {
+        const dt = new Date(it.timestamp);
+        const label = formatTimeLabel(dt);
+        const idx = labelIdx.get(label);
+        if (idx === undefined) continue;
+        const v = typeof it.players === 'number' ? it.players : 0;
+        nextMap[it.id][idx] = { t: labelTimes[idx], v };
+      }
+
+      setLabels(labelsUniq);
+      setSeriesMap(nextMap);
+    } catch (e) {
+      // ignore
+    }
+  }, [servers]);
+
   const pollOnce = useCallback(async () => {
     if (!servers.length) return;
     setLoading(true);
@@ -79,7 +135,7 @@ export default function FivemMonitor() {
   }, [labels, servers, seriesMap]);
 
   const chartData = useMemo(() => {
-    const datasets = servers.map((s, idx) => ({
+    const datasets: any[] = servers.map((s, idx) => ({
       label: s.name,
       data: (seriesMap[s.id] ?? []).map((p) => p.v),
       borderColor: s.color || COLORS[idx % COLORS.length],
@@ -94,8 +150,8 @@ export default function FivemMonitor() {
         data: combinedSeries,
         borderColor: '#111827',
         backgroundColor: '#11182733',
-        borderDash: [6, 6],
         tension: 0.25,
+        segment: { borderDash: [6, 6] },
       });
     }
 
@@ -146,12 +202,15 @@ export default function FivemMonitor() {
     return () => stopPolling();
   }, [fetchServers, stopPolling]);
 
-  // 自動開始監控：伺服器清單載入後即以 1 分鐘輪詢
+  // 自動開始監控：伺服器清單載入後即以 1 分鐘輪詢，並先載入歷史
   useEffect(() => {
+    if (servers.length) {
+      fetchHistory();
+    }
     if (servers.length && !timerRef.current) {
       startPolling();
     }
-  }, [servers, startPolling]);
+  }, [servers, startPolling, fetchHistory]);
 
   return (
     <div className="space-y-6">

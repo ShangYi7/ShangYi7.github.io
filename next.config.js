@@ -14,7 +14,7 @@ const withMDX = require('@next/mdx')({
 })
 
 const nextConfig = {
-  output: 'export',
+  output: 'standalone',
   trailingSlash: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   experimental: {
